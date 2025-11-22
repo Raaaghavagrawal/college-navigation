@@ -168,7 +168,7 @@ function App() {
           fetch('/data/edges.json'),
           fetch('/data/routes.json'),
         ]);
-        
+
         if (!nodesRes.ok) {
           console.error('❌ Failed to load nodes.json:', nodesRes.status, nodesRes.statusText);
         }
@@ -178,13 +178,13 @@ function App() {
         if (!routesRes.ok) {
           console.warn('⚠️ Failed to load routes.json (optional):', routesRes.status);
         }
-        
+
         const [nodesJson, edgesJson, routesJson] = await Promise.all([
           nodesRes.ok ? nodesRes.json() : [],
           edgesRes.ok ? edgesRes.json() : [],
           routesRes.ok ? routesRes.json().catch(() => []) : [],
         ]);
-        
+
         setNodes(nodesJson || []);
         setEdges(edgesJson || []);
         setRoutesData(routesJson || []);
@@ -262,7 +262,9 @@ function App() {
   }
 
   const handleFindRoute = () => {
+    console.log('[App] ========== FIND ROUTE START ==========');
     console.log('[App] handleFindRoute called with startId, endId =', startId, endId);
+    console.log('[App] routesData available:', routesData.length, 'routes');
 
     if (!startId || !endId) {
       console.warn('⚠️ Please select both start and end locations');
@@ -277,20 +279,32 @@ function App() {
     const sId = typeof startId === 'number' ? startId : parseInt(startId, 10);
     const eId = typeof endId === 'number' ? endId : parseInt(endId, 10);
     console.log('[App] Normalized IDs sId, eId =', sId, eId);
+    console.log('[App] Looking for route:', sId, '->', eId);
 
     // Try to find a manually traced route first (from routes.json)
     // routes.json has start and end as numbers, so we compare as numbers
+    console.log('[App] Searching in routesData:', routesData.map(r => `${r.start}-${r.end}`).slice(0, 10));
     const manual =
       routesData.find(r => {
         const routeStart = typeof r.start === 'number' ? r.start : parseInt(r.start, 10);
         const routeEnd = typeof r.end === 'number' ? r.end : parseInt(r.end, 10);
-        return (
-          (routeStart === sId && routeEnd === eId) ||
-          (routeStart === eId && routeEnd === sId)
-        );
+        const match = (routeStart === sId && routeEnd === eId) || (routeStart === eId && routeEnd === sId);
+        if (match) {
+          console.log('[App] ✅ FOUND MANUAL ROUTE:', r.id, `(${routeStart}-${routeEnd})`);
+        }
+        return match;
       }) || null;
 
-    console.log('[App] Manual route match id =', manual ? manual.id : null);
+    console.log('[App] Manual route result:', manual ? `Found route ${manual.id}` : 'NOT FOUND');
+    if (manual) {
+      console.log('[App] Manual route details:', {
+        id: manual.id,
+        start: manual.start,
+        end: manual.end,
+        pathLength: manual.path?.length,
+        geomLength: manual.geom?.geometry?.coordinates?.length
+      });
+    }
 
     const startNode = placesById[sId];
     const endNode = placesById[eId];
@@ -307,6 +321,7 @@ function App() {
           : manual.path || [];
 
       console.log('[App] Using manual route coords length =', coords.length);
+      console.log('[App] First 3 coords:', coords.slice(0, 3));
 
       if (coords.length >= 2) {
         points = coords

@@ -6,9 +6,12 @@ import { FiMinus, FiPlus, FiTarget, FiPause, FiPlay } from 'react-icons/fi';
 import { MarkerAnimator } from '../core/MarkerAnimator.js';
 
 // Basic SVG size used for internal coordinate system
-// Match roughly the GLBITM campus map coordinate system from nodes/routes.
-const VIEWBOX_WIDTH = 1500;
-const VIEWBOX_HEIGHT = 1286;
+// Match the GLBITM campus map coordinate system from nodes/routes.
+// Leaflet uses bounds [[0, 0], [IMG_H, IMG_W]] = [[0, 0], [1286, 1500]]
+// This means lat (y) from 0-1286, lng (x) from 0-1500
+// So SVG viewBox should be: x=0-1500, y=0-1286
+const VIEWBOX_WIDTH = 1500;  // matches lng range (x-axis)
+const VIEWBOX_HEIGHT = 1286; // matches lat range (y-axis)
 
 export const MapCanvas = forwardRef(function MapCanvas(
   { backgroundUrl, route, edges, activeStepIndex, onSegmentChange },
@@ -132,7 +135,7 @@ export const MapCanvas = forwardRef(function MapCanvas(
 
   const markerNode = markerState ? (
     <g
-      transform={`translate(${markerState.x}, ${markerState.y}) rotate(${markerState.angleDeg || 0})`}
+      transform={`translate(${markerState.x}, ${VIEWBOX_HEIGHT - markerState.y}) rotate(${markerState.angleDeg || 0})`}
     >
       <circle r="6" fill="#38bdf8" stroke="#0f172a" strokeWidth="2" />
       <polygon points="0,-14 6,0 -6,0" fill="#38bdf8" />
@@ -158,7 +161,7 @@ export const MapCanvas = forwardRef(function MapCanvas(
       >
         <motion.div
           className="absolute"
-          style={{ 
+          style={{
             zIndex: 1,
             left: '50%',
             top: '50%',
@@ -176,7 +179,7 @@ export const MapCanvas = forwardRef(function MapCanvas(
             width={VIEWBOX_WIDTH}
             height={VIEWBOX_HEIGHT}
             viewBox={`0 0 ${VIEWBOX_WIDTH} ${VIEWBOX_HEIGHT}`}
-            style={{ 
+            style={{
               display: 'block',
               position: 'relative',
             }}
@@ -197,7 +200,8 @@ export const MapCanvas = forwardRef(function MapCanvas(
               edges.map(edge => {
                 const coords = edge?.geom?.geometry?.coordinates;
                 if (!coords || !coords.length) return null;
-                const pts = coords.map(([x, y]) => `${x},${y}`).join(' ');
+                // Invert Y-axis to match Leaflet coordinate system
+                const pts = coords.map(([x, y]) => `${x},${VIEWBOX_HEIGHT - y}`).join(' ');
                 return (
                   <polyline
                     key={edge.id}
@@ -223,7 +227,10 @@ export const MapCanvas = forwardRef(function MapCanvas(
 
               console.log('[MapCanvas] Rendering route with raw/valid points =', route.points.length, validPoints.length);
 
-              const routePoints = validPoints.map(p => `${p.x},${p.y}`).join(' ');
+              // routes.json stores [x, y] pixel coordinates
+              // Leaflet's Y-axis increases upward, SVG's Y-axis increases downward
+              // So we invert Y: cy = VIEWBOX_HEIGHT - y
+              const routePoints = validPoints.map(p => `${p.x},${VIEWBOX_HEIGHT - p.y}`).join(' ');
               return (
                 <>
                   {/* Debug circles at each route vertex so it is VERY visible */}
@@ -231,7 +238,7 @@ export const MapCanvas = forwardRef(function MapCanvas(
                     <circle
                       key={`debug-${i}`}
                       cx={p.x}
-                      cy={p.y}
+                      cy={VIEWBOX_HEIGHT - p.y}
                       r="10"
                       fill="none"
                       stroke="yellow"
@@ -262,7 +269,7 @@ export const MapCanvas = forwardRef(function MapCanvas(
                   {validPoints[0] && (
                     <circle
                       cx={validPoints[0].x}
-                      cy={validPoints[0].y}
+                      cy={VIEWBOX_HEIGHT - validPoints[0].y}
                       r="8"
                       fill="#e74c3c"
                       stroke="#fff"
@@ -274,7 +281,7 @@ export const MapCanvas = forwardRef(function MapCanvas(
                   {validPoints[validPoints.length - 1] && (
                     <circle
                       cx={validPoints[validPoints.length - 1].x}
-                      cy={validPoints[validPoints.length - 1].y}
+                      cy={VIEWBOX_HEIGHT - validPoints[validPoints.length - 1].y}
                       r="8"
                       fill="#22c55e"
                       stroke="#fff"

@@ -227,8 +227,8 @@ function CampusNav() {
         setTimeout(() => {
           alert(
             'Error loading data: ' +
-              error.message +
-              '\n\nMake sure you are using a local server (http://localhost:5173)',
+            error.message +
+            '\n\nMake sure you are using a local server (http://localhost:5173)',
           );
         }, 500);
       }

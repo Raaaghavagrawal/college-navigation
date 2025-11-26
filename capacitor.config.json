@@ -1,0 +1,6 @@
+{
+  "appId": "com.glbajaj.bhhraman",
+  "appName": "Bhhraman",
+  "webDir": "college-navigation-react/dist",
+  "bundledWebRuntime": false
+}

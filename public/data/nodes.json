@@ -1,0 +1,225 @@
+[
+  {
+    "id": 1,
+    "name": "MESS, CAFETERIA AND GYM",
+    "x": 788,
+    "y": 790,
+    "description": "The central dining facility and fitness center for students. Features a spacious mess hall serving breakfast, lunch, and dinner, along with a modern cafeteria offering snacks and beverages. The gym is equipped with state-of-the-art fitness equipment and is open to all students and faculty."
+  },
+  {
+    "id": 2,
+    "name": "AB1 ENTRY POINT",
+    "x": 1058,
+    "y": 268,
+    "image": "/images/ab1.png",
+    "description": "Main entrance to Academic Block 1, housing various departments and lecture halls. This building is a hub for undergraduate engineering programs and features modern classrooms, laboratories, and faculty offices."
+  },
+  {
+    "id": 3,
+    "name": "BOYS HOSTEL SENIORS",
+    "x": 1034,
+    "y": 736,
+    "description": "Residential facility for senior male students, offering comfortable accommodation with modern amenities. Features include common rooms, study areas, and recreational facilities. The hostel provides a safe and conducive environment for academic growth."
+  },
+  {
+    "id": 4,
+    "name": "AB 2 ENTRY POINT",
+    "x": 690,
+    "y": 422,
+    "description": "Main entrance to Academic Block 2, which houses additional departments, computer labs, and seminar halls. This building is known for its advanced technical facilities and collaborative learning spaces."
+  },
+  {
+    "id": 5,
+    "name": "PGDM CANTEEN",
+    "x": 286,
+    "y": 450,
+    "description": "Exclusive canteen facility for PGDM students and faculty, offering a variety of food and beverage options in a comfortable setting. Popular spot for informal meetings and group discussions."
+  },
+  {
+    "id": 6,
+    "name": "MAIN GROUND ENTRY",
+    "x": 534,
+    "y": 692,
+    "description": "Primary access point to the main sports ground and athletic facilities. The ground hosts various sports activities, annual sports meets, and outdoor events. Features include cricket pitch, football field, and running track."
+  },
+  {
+    "id": 7,
+    "name": "MAIN GATE 1",
+    "x": 752,
+    "y": 172,
+    "image": "/images/gate.png",
+    "description": "The primary entrance to GLBITM campus. This is the main access point for students, faculty, and visitors. Security personnel are stationed here 24/7 to ensure campus safety and manage entry protocols."
+  },
+  {
+    "id": 8,
+    "name": "WORKSHOP",
+    "x": 1138,
+    "y": 984,
+    "description": "Engineering workshop facility equipped with various machines and tools for practical training. Students gain hands-on experience in manufacturing processes, machining, welding, and other technical skills essential for engineering education."
+  },
+  {
+    "id": 9,
+    "name": "BOYS HOSTEL JUNIORS",
+    "x": 86,
+    "y": 858,
+    "description": "Residential accommodation for junior male students, providing a supportive living environment for first and second-year students. Features include shared rooms, common areas, and 24/7 security to ensure student welfare and safety."
+  },
+  {
+    "id": 10,
+    "name": "PGDM BLOCK ENTRY",
+    "x": 154,
+    "y": 316,
+    "image": "/images/pgdm.png",
+    "description": "Main entrance to the Post Graduate Diploma in Management block. This building houses classrooms, case study rooms, and facilities specifically designed for management education, including a dedicated library and seminar halls."
+  },
+  {
+    "id": 11,
+    "name": "COW SHELTER",
+    "x": 1370,
+    "y": 1037
+  },
+  {
+    "id": 12,
+    "name": "GENSET",
+    "x": 1369,
+    "y": 862
+  },
+  {
+    "id": 13,
+    "name": "SECURITY GUARD ROOM GATE 2",
+    "x": 1444,
+    "y": 699
+  },
+  {
+    "id": 14,
+    "name": "MAIN GATE 2",
+    "x": 1480,
+    "y": 646
+  },
+  {
+    "id": 15,
+    "name": "WASTE RECYCLING AREA",
+    "x": 1445,
+    "y": 594
+  },
+  {
+    "id": 16,
+    "name": "STUDENTS LUNCH AREA",
+    "x": 1413,
+    "y": 556
+  },
+  {
+    "id": 17,
+    "name": "STATIONARY SHOP",
+    "x": 1140,
+    "y": 745
+  },
+  {
+    "id": 18,
+    "name": "SPORTS ROOM",
+    "x": 1138,
+    "y": 855
+  },
+  {
+    "id": 19,
+    "name": "GYM",
+    "x": 934,
+    "y": 797
+  },
+  {
+    "id": 20,
+    "name": "FUTSAL GROUND",
+    "x": 850,
+    "y": 967
+  },
+  {
+    "id": 21,
+    "name": "BASKETBALL GROUND",
+    "x": 1045,
+    "y": 1046
+  },
+  {
+    "id": 22,
+    "name": "BADMINTON GROUND",
+    "x": 1136,
+    "y": 1047
+  },
+  {
+    "id": 23,
+    "name": "VOLLEYBALL GROUND",
+    "x": 1182,
+    "y": 1115
+  },
+  {
+    "id": 24,
+    "name": "TRAINING AND PLACEMENT CELL",
+    "x": 1186,
+    "y": 504
+  },
+  {
+    "id": 25,
+    "name": "CAMPUS SHOP",
+    "x": 1183,
+    "y": 355
+  },
+  {
+    "id": 26,
+    "name": "ACCOUNTS AND REGISTRAR OFFICE",
+    "x": 949,
+    "y": 339
+  },
+  {
+    "id": 27,
+    "name": "ADMISSION CELL",
+    "x": 904,
+    "y": 520
+  },
+  {
+    "id": 28,
+    "name": "SECURITY GUARD ROOM GATE 1",
+    "x": 692,
+    "y": 165
+  },
+  {
+    "id": 29,
+    "name": "COLLEGE LAWN ENTRY",
+    "x": 369,
+    "y": 191
+  },
+  {
+    "id": 30,
+    "name": "COLLEGE LIBRARY",
+    "x": 391,
+    "y": 435
+  },
+  {
+    "id": 31,
+    "name": "SBG HALL ENTRY (2ND FLOOR)",
+    "x": 677,
+    "y": 422
+  },
+  {
+    "id": 32,
+    "name": "SHD HALL ENTRY (2ND FLOOR)",
+    "x": 1054,
+    "y": 560
+  },
+  {
+    "id": 33,
+    "name": "SEATING AREA",
+    "x": 750,
+    "y": 943
+  },
+  {
+    "id": 34,
+    "name": "GIRLS HOSTEL ENTRY",
+    "x": 350,
+    "y": 1173
+  },
+  {
+    "id": 35,
+    "name": "GUEST HOUSE & STAFF QUARTERS",
+    "x": 271,
+    "y": 1089
+  }
+]

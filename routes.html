@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Route Editor - Manually Trace Routes</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        #map {
+            height: 100vh;
+            width: 70vw;
+            float: left;
+        }
+
+        .control-panel {
+            width: 30vw;
+            height: 100vh;
+            float: left;
+            background: #f5f5f5;
+            padding: 20px;
+            overflow-y: auto;
+            box-sizing: border-box;
+        }
+
+        .control-panel h2 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+
+        .info-box {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid #3498db;
+        }
+
+        label {
+            display: block;
+            margin: 12px 0 5px 0;
+            font-weight: 600;
+            color: #34495e;
+            font-size: 14px;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #bdc3c7;
+            border-radius: 5px;
+            font-size: 14px;
+            background: white;
+            cursor: pointer;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin: 5px 0;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        button:hover {
+            background: #2980b9;
+        }
+
+        button:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+        }
+
+        button.start-trace {
+            background: #27ae60;
+        }
+
+        button.start-trace:hover {
+            background: #229954;
+        }
+
+        button.finish-trace {
+            background: #e74c3c;
+        }
+
+        button.finish-trace:hover {
+            background: #c0392b;
+        }
+
+        .status {
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+            font-size: 12px;
+        }
+
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status.warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        .mode-indicator {
+            padding: 10px;
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 4px;
+            margin: 10px 0;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .route-list {
+            margin-top: 15px;
+        }
+
+        .route-item {
+            background: white;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 4px;
+            border-left: 4px solid #3498db;
+        }
+
+        .route-item strong {
+            color: #2c3e50;
+        }
+
+        .route-item small {
+            display: block;
+            color: #6c757d;
+            margin-top: 4px;
+        }
+
+        button.delete-btn {
+            background: #e74c3c;
+            width: auto;
+            padding: 5px 10px;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 150px;
+            margin-top: 15px;
+            font-family: monospace;
+            font-size: 11px;
+            padding: 10px;
+            border: 2px solid #bdc3c7;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+    <div class="control-panel">
+        <h2>🛤️ Route Editor</h2>
+        <div class="info-box">
+            <strong>Instructions:</strong><br>
+            1. <strong>Click "Load EN Points" button first!</strong><br>
+            2. Select start and end EN points from dropdowns<br>
+            3. Click "Start Tracing Route"<br>
+            4. Click on map to trace the exact path<br>
+            5. Click "Finish & Save Route" when done<br>
+            6. Export routes.json when finished
+        </div>
+
+        <div id="status"></div>
+
+        <div class="mode-indicator" id="modeIndicator">
+            Select start and end points to begin
+        </div>
+
+        <label for="routeStart">Start Point (EN):</label>
+        <select id="routeStart">
+            <option value="">Select start point...</option>
+        </select>
+
+        <label for="routeEnd">End Point (EN):</label>
+        <select id="routeEnd">
+            <option value="">Select end point...</option>
+        </select>
+
+        <button onclick="loadNodes()" style="background: #27ae60; font-size: 16px; padding: 15px; margin-bottom: 15px;">
+            🔄 Load EN Points (Click First!)
+        </button>
+        <button id="startTraceBtn" class="start-trace" onclick="startTracingRoute()" disabled>Start Tracing
+            Route</button>
+        <button id="finishTraceBtn" class="finish-trace" onclick="finishTracingRoute()" disabled>Finish & Save
+            Route</button>
+        <button onclick="clearCurrentRoute()" style="background: #f39c12;">Clear Current Route</button>
+
+        <div class="route-list">
+            <h3>Saved Routes: <span id="routeCount">0</span></h3>
+            <div id="routeList"></div>
+        </div>
+
+        <button onclick="exportRoutes()" style="background: #27ae60; margin-top: 20px;">Export routes.json</button>
+
+        <textarea id="jsonOutput" readonly placeholder="Routes JSON will appear here..."></textarea>
+    </div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        const IMG_W = 1500;
+        const IMG_H = 1286;
+        // Use the same public map asset as the React app
+        const imgUrl = 'public/GLBITM Map.jpg';
+
+        const map = L.map('map', {
+            crs: L.CRS.Simple,
+            minZoom: -2,
+            maxZoom: 2
+        });
+
+        const bounds = [[0, 0], [IMG_H, IMG_W]];
+        const img = L.imageOverlay(imgUrl, bounds).addTo(map);
+        map.fitBounds(bounds);
+
+        let nodes = [];
+        let routes = [];
+        let routeId = 1;
+        let isTracing = false;
+        let currentRoute = null;
+        let currentPath = [];
+        let currentPathLine = null;
+        let nodeMarkers = {};
+        let routeLayers = {};
+        let startMarker = null;
+        let endMarker = null;
+
+        function pointToLatLng(pt) {
+            return [pt[1], pt[0]];
+        }
+
+        function calculatePathLength(coords) {
+            let length = 0;
+            for (let i = 0; i < coords.length - 1; i++) {
+                const dx = coords[i + 1][0] - coords[i][0];
+                const dy = coords[i + 1][1] - coords[i][1];
+                length += Math.sqrt(dx * dx + dy * dy);
+            }
+            return length;
+        }
+
+        async function loadNodes() {
+            try {
+                console.log('Loading nodes.json...');
+                const response = await fetch('public/data/nodes.json');
+
+                if (!response.ok) {
+                    throw new Error('Failed to load nodes.json: ' + response.status);
+                }
+
+                nodes = await response.json();
+                console.log('Loaded nodes:', nodes);
+
+                if (!nodes || nodes.length === 0) {
+                    showStatus('No nodes found! Please create nodes.json first.', 'info');
+                    return;
+                }
+
+                showStatus('Loaded ' + nodes.length + ' EN points!', 'success');
+
+                Object.values(nodeMarkers).forEach(m => map.removeLayer(m));
+                nodeMarkers = {};
+
+                const startSelect = document.getElementById('routeStart');
+                const endSelect = document.getElementById('routeEnd');
+
+                if (!startSelect || !endSelect) {
+                    console.error('Dropdown elements not found!');
+                    showStatus('Error: Dropdown elements not found', 'info');
+                    return;
+                }
+
+                startSelect.innerHTML = '<option value="">Select start point...</option>';
+                endSelect.innerHTML = '<option value="">Select end point...</option>';
+
+                nodes.forEach(node => {
+                    if (!node.id || !node.name) {
+                        console.warn('Invalid node:', node);
+                        return;
+                    }
+
+                    const opt1 = document.createElement('option');
+                    opt1.value = node.id;
+                    opt1.textContent = node.name;
+                    startSelect.appendChild(opt1);
+
+                    const opt2 = document.createElement('option');
+                    opt2.value = node.id;
+                    opt2.textContent = node.name;
+                    endSelect.appendChild(opt2);
+
+                    const marker = L.circleMarker(pointToLatLng([node.x, node.y]), {
+                        radius: 6,
+                        color: '#2c3e50',
+                        fillColor: '#ecf0f1',
+                        fillOpacity: 1,
+                        weight: 2
+                    }).addTo(map).bindPopup('<strong>' + node.name + '</strong><br>ID: ' + node.id);
+
+                    nodeMarkers[node.id] = marker;
+                });
+
+                // Add event listeners if not already added
+                const startSelectEl = document.getElementById('routeStart');
+                const endSelectEl = document.getElementById('routeEnd');
+
+                // Remove old listeners and add new ones
+                const newStartHandler = function () { checkReadyToTrace(); };
+                const newEndHandler = function () { checkReadyToTrace(); };
+
+                startSelectEl.removeEventListener('change', checkReadyToTrace);
+                endSelectEl.removeEventListener('change', checkReadyToTrace);
+
+                startSelectEl.addEventListener('change', newStartHandler);
+                endSelectEl.addEventListener('change', newEndHandler);
+
+                console.log('Nodes loaded successfully. Dropdowns populated.');
+                loadRoutes();
+            } catch (error) {
+                console.error('Error loading nodes:', error);
+                showStatus('Error loading nodes.json: ' + error.message + '. Make sure you are running a local server.', 'info');
+            }
+        }
+
+        function checkReadyToTrace() {
+            const startId = document.getElementById('routeStart').value;
+            const endId = document.getElementById('routeEnd').value;
+
+            if (startId && endId && startId !== endId) {
+                document.getElementById('startTraceBtn').disabled = false;
+
+                // Check if route already exists
+                const existing = routes.find(r =>
+                    (r.start === parseInt(startId) && r.end === parseInt(endId)) ||
+                    (r.start === parseInt(endId) && r.end === parseInt(startId))
+                );
+
+                if (existing) {
+                    showStatus('Route already exists for these points!', 'warning');
+                } else {
+                    showStatus('Ready to trace route', 'info');
+                }
+            } else {
+                document.getElementById('startTraceBtn').disabled = true;
+            }
+        }
+
+        async function loadRoutes() {
+            try {
+                const response = await fetch('public/data/routes.json');
+                routes = await response.json();
+                updateRouteDisplay();
+                drawAllRoutes();
+            } catch (error) {
+                // routes.json doesn't exist yet, that's okay
+                routes = [];
+            }
+        }
+
+        function startTracingRoute() {
+            const startId = parseInt(document.getElementById('routeStart').value);
+            const endId = parseInt(document.getElementById('routeEnd').value);
+
+            if (!startId || !endId || startId === endId) {
+                showStatus('Please select different start and end points!', 'warning');
+                return;
+            }
+
+            // Check if route already exists
+            const existing = routes.find(r =>
+                (r.start === startId && r.end === endId) ||
+                (r.start === endId && r.end === startId)
+            );
+
+            if (existing) {
+                if (!confirm('Route already exists! Overwrite it?')) {
+                    return;
+                }
+                // Remove existing route
+                routes = routes.filter(r => r.id !== existing.id);
+                if (routeLayers[existing.id]) {
+                    map.removeLayer(routeLayers[existing.id]);
+                    delete routeLayers[existing.id];
+                }
+            }
+
+            const startNode = nodes.find(n => n.id === startId);
+            const endNode = nodes.find(n => n.id === endId);
+
+            // Mark start and end points
+            if (startMarker) map.removeLayer(startMarker);
+            if (endMarker) map.removeLayer(endMarker);
+
+            startMarker = L.circleMarker(pointToLatLng([startNode.x, startNode.y]), {
+                radius: 10,
+                color: '#e74c3c',
+                fillColor: '#e74c3c',
+                fillOpacity: 1,
+                weight: 3
+            }).addTo(map).bindPopup('START: ' + startNode.name);
+
+            endMarker = L.circleMarker(pointToLatLng([endNode.x, endNode.y]), {
+                radius: 10,
+                color: '#27ae60',
+                fillColor: '#27ae60',
+                fillOpacity: 1,
+                weight: 3
+            }).addTo(map).bindPopup('END: ' + endNode.name);
+
+            isTracing = true;
+            currentRoute = {
+                id: routeId++,
+                start: startId,
+                end: endId,
+                startName: startNode.name,
+                endName: endNode.name
+            };
+            currentPath = [];
+
+            document.getElementById('startTraceBtn').disabled = true;
+            document.getElementById('finishTraceBtn').disabled = false;
+            document.getElementById('routeStart').disabled = true;
+            document.getElementById('routeEnd').disabled = true;
+            document.getElementById('modeIndicator').textContent = 'Tracing mode: Click on map to trace the route';
+            document.getElementById('modeIndicator').style.background = '#d4edda';
+            document.getElementById('modeIndicator').style.borderColor = '#27ae60';
+
+            showStatus('Click on the map to trace the route from ' + startNode.name + ' to ' + endNode.name, 'info');
+        }
+
+        function finishTracingRoute() {
+            if (!isTracing || currentPath.length < 2) {
+                showStatus('Need at least 2 points to create a route!', 'warning');
+                return;
+            }
+
+            const pathCoords = currentPath.map(pt => [pt.x, pt.y]);
+            const length = calculatePathLength(pathCoords);
+
+            currentRoute.path = pathCoords;
+            currentRoute.length = Math.round(length * 100) / 100;
+            currentRoute.geom = {
+                type: "Feature",
+                geometry: {
+                    type: "LineString",
+                    coordinates: pathCoords
+                }
+            };
+
+            routes.push(currentRoute);
+
+            // Draw saved route on map
+            const lineCoords = pathCoords.map(pt => pointToLatLng(pt));
+            const line = L.polyline(lineCoords, {
+                color: '#3498db',
+                weight: 5,
+                opacity: 0.8
+            }).addTo(map).bindPopup('<strong>' + currentRoute.startName + ' → ' + currentRoute.endName + '</strong><br>Length: ' + currentRoute.length.toFixed(1) + ' pixels');
+
+            routeLayers[currentRoute.id] = line;
+
+            // Clean up
+            if (currentPathLine) {
+                map.removeLayer(currentPathLine);
+                currentPathLine = null;
+            }
+            if (startMarker) {
+                map.removeLayer(startMarker);
+                startMarker = null;
+            }
+            if (endMarker) {
+                map.removeLayer(endMarker);
+                endMarker = null;
+            }
+
+            currentPath = [];
+            currentRoute = null;
+            isTracing = false;
+            document.getElementById('startTraceBtn').disabled = false;
+            document.getElementById('finishTraceBtn').disabled = true;
+            document.getElementById('routeStart').disabled = false;
+            document.getElementById('routeEnd').disabled = false;
+            document.getElementById('routeStart').value = '';
+            document.getElementById('routeEnd').value = '';
+            document.getElementById('modeIndicator').textContent = 'Select start and end points to begin';
+            document.getElementById('modeIndicator').style.background = '#fff3cd';
+            document.getElementById('modeIndicator').style.borderColor = '#ffc107';
+
+            showStatus('Route saved successfully!', 'success');
+            updateRouteDisplay();
+        }
+
+        function clearCurrentRoute() {
+            if (currentPathLine) {
+                map.removeLayer(currentPathLine);
+                currentPathLine = null;
+            }
+            if (startMarker) {
+                map.removeLayer(startMarker);
+                startMarker = null;
+            }
+            if (endMarker) {
+                map.removeLayer(endMarker);
+                endMarker = null;
+            }
+            currentPath = [];
+            currentRoute = null;
+            isTracing = false;
+            document.getElementById('startTraceBtn').disabled = false;
+            document.getElementById('finishTraceBtn').disabled = true;
+            document.getElementById('routeStart').disabled = false;
+            document.getElementById('routeEnd').disabled = false;
+            document.getElementById('modeIndicator').textContent = 'Select start and end points to begin';
+            document.getElementById('modeIndicator').style.background = '#fff3cd';
+            document.getElementById('modeIndicator').style.borderColor = '#ffc107';
+            showStatus('Current route cleared', 'info');
+        }
+
+        function removeRoute(routeId) {
+            if (confirm('Remove this route?')) {
+                routes = routes.filter(r => r.id !== routeId);
+                if (routeLayers[routeId]) {
+                    map.removeLayer(routeLayers[routeId]);
+                    delete routeLayers[routeId];
+                }
+                updateRouteDisplay();
+                showStatus('Route removed', 'success');
+            }
+        }
+
+        function drawAllRoutes() {
+            routes.forEach(route => {
+                if (route.geom && route.geom.geometry) {
+                    const coords = route.geom.geometry.coordinates.map(pt => pointToLatLng(pt));
+                    const line = L.polyline(coords, {
+                        color: '#3498db',
+                        weight: 4,
+                        opacity: 0.6
+                    }).addTo(map).bindPopup('<strong>' + route.startName + ' → ' + route.endName + '</strong>');
+
+                    routeLayers[route.id] = line;
+                }
+            });
+        }
+
+        map.on('click', function (e) {
+            if (!isTracing) return;
+
+            const point = e.latlng;
+            const x = Math.round(point.lng);
+            const y = Math.round(point.lat);
+
+            currentPath.push({ x: x, y: y });
+
+            if (currentPathLine) {
+                map.removeLayer(currentPathLine);
+            }
+
+            if (currentPath.length > 1) {
+                const coords = currentPath.map(pt => pointToLatLng([pt.x, pt.y]));
+                currentPathLine = L.polyline(coords, {
+                    color: '#e74c3c',
+                    weight: 4,
+                    opacity: 0.6,
+                    dashArray: '5, 5'
+                }).addTo(map);
+            }
+
+            L.circleMarker([y, x], {
+                radius: 3,
+                color: '#e74c3c',
+                fillColor: '#e74c3c',
+                fillOpacity: 1
+            }).addTo(map);
+        });
+
+        function updateRouteDisplay() {
+            document.getElementById('routeCount').textContent = routes.length;
+
+            const routeList = document.getElementById('routeList');
+            routeList.innerHTML = '';
+
+            routes.forEach(route => {
+                const item = document.createElement('div');
+                item.className = 'route-item';
+                item.innerHTML = '<strong>' + route.startName + ' → ' + route.endName + '</strong><small>Length: ' + route.length.toFixed(1) + ' pixels | Points: ' + route.path.length + '</small><button class="delete-btn" onclick="removeRoute(' + route.id + ')">Remove</button>';
+                routeList.appendChild(item);
+            });
+
+            document.getElementById('jsonOutput').value = JSON.stringify(routes, null, 2);
+        }
+
+        function exportRoutes() {
+            if (routes.length === 0) {
+                showStatus('No routes to export!', 'warning');
+                return;
+            }
+
+            const json = JSON.stringify(routes, null, 2);
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'routes.json';
+            a.click();
+            URL.revokeObjectURL(url);
+
+            showStatus('Exported ' + routes.length + ' routes to routes.json!', 'success');
+        }
+
+        function showStatus(message, type) {
+            const statusDiv = document.getElementById('status');
+            statusDiv.className = 'status ' + type;
+            statusDiv.textContent = message;
+            setTimeout(function () {
+                statusDiv.textContent = '';
+                statusDiv.className = '';
+            }, 5000);
+        }
+
+        // Load nodes when page loads
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', loadNodes);
+        } else {
+            loadNodes();
+        }
+    </script>
+</body>
+
+</html>

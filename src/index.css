@@ -1,10 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Manrope:wght@200..800&family=Martel+Sans:wght@200;300;400;600;700;800;900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Orbitron:wght@400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=SUSE+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Manrope:wght@200..800&family=Martel+Sans:wght@200;300;400;600;700;800;900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Orbitron:wght@400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=SUSE+Mono:ital,wght@0,100..800;1,100..800&display=swap');
 
 @import "tailwindcss";
 
 @layer base {
   html {
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Raleway', sans-serif;
   }
 
   body {
@@ -13,19 +13,63 @@
     color: #e5e7eb;
   }
 
-  /* Ensure form elements inherit the font */
+  /* Force Raleway on everything by default */
+  * {
+    font-family: 'Raleway', sans-serif;
+  }
+
+  /* Ensure form elements and placeholders inherit the font */
   button,
   input,
   textarea,
   select,
-  ::placeholder {
-    font-family: 'DM Sans', sans-serif !important;
+  ::placeholder,
+  ::-webkit-input-placeholder,
+  :-moz-placeholder,
+  ::-moz-placeholder,
+  :-ms-input-placeholder {
+    font-family: 'Raleway', sans-serif !important;
   }
 }
 
 /* Orbitron font for branding */
 .font-orbitron {
   font-family: 'Orbitron', sans-serif !important;
+}
+
+/* Roboto font utility class */
+.font-roboto {
+  font-family: 'Roboto', sans-serif !important;
+}
+
+/* Poppins font utility class */
+.font-poppins {
+  font-family: 'Poppins', sans-serif !important;
+}
+
+/* Montserrat font utility class */
+.font-montserrat {
+  font-family: 'Montserrat', sans-serif !important;
+}
+
+/* Manrope font utility class */
+.font-manrope {
+  font-family: 'Manrope', sans-serif !important;
+}
+
+/* Raleway font utility class */
+.font-raleway {
+  font-family: 'Raleway', sans-serif !important;
+}
+
+/* SUSE Mono font utility class */
+.font-suse-mono {
+  font-family: 'SUSE Mono', monospace !important;
+}
+
+/* Martel Sans font utility class */
+.font-martel-sans {
+  font-family: 'Martel Sans', sans-serif !important;
 }
 
 html,

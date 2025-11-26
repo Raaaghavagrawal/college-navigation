@@ -6,7 +6,7 @@
 }
 
 body {
-  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: 'Raleway', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   overflow: hidden;
   background: #0a0e27;
 }
@@ -374,7 +374,7 @@ body {
   color: #e5e7eb;
   font-size: 11px;
   cursor: pointer;
-  font-family: 'DM Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+  font-family: 'Raleway', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
     sans-serif;
 }
 
@@ -414,7 +414,7 @@ body {
   color: #e2e8f0;
   cursor: pointer;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Raleway', sans-serif;
   appearance: none;
   background-repeat: no-repeat;
   background-position: right 20px center;
@@ -449,7 +449,7 @@ body {
   font-weight: 600;
   cursor: pointer;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Raleway', sans-serif;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -598,7 +598,7 @@ body {
   backdrop-filter: blur(10px);
   border: 1px solid rgba(102, 126, 234, 0.4);
   color: #e2e8f0;
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Raleway', sans-serif;
   font-weight: 600;
   font-size: 13px;
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
@@ -651,7 +651,7 @@ body {
 /* Ensure login overlay uses the same font as the rest of the site */
 .login-overlay,
 .login-overlay * {
-  font-family: 'DM Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+  font-family: 'Raleway', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
     sans-serif;
 }
 

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { motion } from 'framer-motion';
 import { Button, IconButton } from './UiComponents/Button.jsx';
 import SearchAutocomplete from './SearchAutocomplete.jsx';
-import QuickStats from './QuickStats.jsx';
 import {
   FiChevronLeft,
   FiChevronRight,
@@ -56,10 +55,7 @@ export function LeftSidebar({
         </div>
       </div>
 
-      {/* Quick Stats */}
-      <div className="mt-4">
-        <QuickStats totalLocations={places?.length || 0} routesFound={favorites?.length || 0} />
-      </div>
+
 
       {/* Quick Categories / Favorites */}
       <div className="mt-6 pb-4">

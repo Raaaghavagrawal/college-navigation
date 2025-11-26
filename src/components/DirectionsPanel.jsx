@@ -113,8 +113,96 @@ export function DirectionsPanel({
                     </motion.button>
                   ))
                 ) : (
-                  <div className="text-[11px] text-slate-500 pt-3">
-                    Choose a start and destination, then tap <span className="font-medium text-slate-200">Find route</span> to see turn-by-turn guidance.
+                  <div className="space-y-4 pt-2">
+                    {/* Main instruction */}
+                    <div className="text-[11px] text-slate-400 leading-relaxed">
+                      Choose a start and destination, then tap <span className="font-medium text-sky-400">Find route</span> to see turn-by-turn guidance.
+                    </div>
+
+                    {/* Quick Tips Section */}
+                    <div className="rounded-xl bg-slate-800/40 border border-slate-700/50 p-3 space-y-2">
+                      <div className="text-[10px] font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        Quick Tips
+                      </div>
+                      <ul className="space-y-1.5 text-[11px] text-slate-300">
+                        <li className="flex items-start gap-2">
+                          <span className="text-sky-400 mt-0.5">•</span>
+                          <span>Click on any location marker on the map to view details</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="text-sky-400 mt-0.5">•</span>
+                          <span>Use the search box to quickly find buildings and facilities</span>
+                        </li>
+                        <li className="flex items-start gap-2">
+                          <span className="text-sky-400 mt-0.5">•</span>
+                          <span>Zoom and pan the map to explore the campus</span>
+                        </li>
+                      </ul>
+                    </div>
+
+                    {/* Popular Destinations */}
+                    <div className="rounded-xl bg-gradient-to-br from-indigo-500/10 to-purple-500/10 border border-indigo-500/20 p-3 space-y-2">
+                      <div className="text-[10px] font-semibold uppercase tracking-wider text-indigo-300 flex items-center gap-1.5">
+                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        Popular Destinations
+                      </div>
+                      <div className="grid grid-cols-2 gap-1.5 text-[10px]">
+                        <div className="bg-slate-800/50 rounded-lg px-2 py-1.5 text-slate-300">Main Gate 1</div>
+                        <div className="bg-slate-800/50 rounded-lg px-2 py-1.5 text-slate-300">AB1 Entry</div>
+                        <div className="bg-slate-800/50 rounded-lg px-2 py-1.5 text-slate-300">Library</div>
+                        <div className="bg-slate-800/50 rounded-lg px-2 py-1.5 text-slate-300">Mess & Gym</div>
+                      </div>
+                    </div>
+
+                    {/* Keyboard Shortcuts */}
+                    <div className="rounded-xl bg-slate-800/30 border border-slate-700/40 p-3 space-y-2">
+                      <div className="text-[10px] font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                        </svg>
+                        Navigation
+                      </div>
+                      <div className="space-y-1 text-[10px] text-slate-400">
+                        <div className="flex justify-between items-center">
+                          <span>Zoom In/Out</span>
+                          <span className="text-slate-500">Mouse Wheel</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span>Pan Map</span>
+                          <span className="text-slate-500">Click & Drag</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Campus Stats */}
+                    <div className="rounded-xl bg-gradient-to-br from-emerald-500/10 to-teal-500/10 border border-emerald-500/20 p-3">
+                      <div className="text-[10px] font-semibold uppercase tracking-wider text-emerald-300 mb-2 flex items-center gap-1.5">
+                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                        </svg>
+                        Campus Overview
+                      </div>
+                      <div className="grid grid-cols-3 gap-2 text-center">
+                        <div>
+                          <div className="text-lg font-bold text-emerald-400">35</div>
+                          <div className="text-[9px] text-slate-400">Locations</div>
+                        </div>
+                        <div>
+                          <div className="text-lg font-bold text-sky-400">12</div>
+                          <div className="text-[9px] text-slate-400">Buildings</div>
+                        </div>
+                        <div>
+                          <div className="text-lg font-bold text-purple-400">8</div>
+                          <div className="text-[9px] text-slate-400">Facilities</div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 )}
               </div>

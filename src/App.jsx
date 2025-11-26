@@ -7,8 +7,8 @@ import DirectionsPanel from './components/DirectionsPanel.jsx';
 import FloatingInstruction from './components/FloatingInstruction.jsx';
 import { FeedbackModal } from './components/FeedbackModal.jsx';
 import { LoadingScreen } from './components/LoadingScreen.jsx';
-import QuickStats from './components/QuickStats.jsx';
 import HelpButton from './components/HelpButton.jsx';
+import { KeyboardShortcutHint } from './components/KeyboardShortcutHint.jsx';
 import { generateDirections, PIXELS_TO_METERS } from './utils/pathfinding.js';
 
 // Map image path - file is in public folder
@@ -77,7 +77,7 @@ function App() {
   const isMobile = useIsMobile();
 
   // Auth state (from original CampusNav)
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [checkingAuth, setCheckingAuth] = useState(true);
   const [loginEmail, setLoginEmail] = useState('');
   const [loginPhone, setLoginPhone] = useState('');
@@ -93,12 +93,19 @@ function App() {
       const stored = localStorage.getItem('bhhraman_user');
       if (stored) {
         const userData = JSON.parse(stored);
-        setIsLoggedIn(true);
-        setLoginEmail(userData.email || '');
-        setLoginPhone(userData.phone || '');
+        if (userData && userData.email) {
+          setIsLoggedIn(true);
+          setLoginEmail(userData.email || '');
+          setLoginPhone(userData.phone || '');
+        } else {
+          setIsLoggedIn(false);
+        }
+      } else {
+        setIsLoggedIn(false);
       }
     } catch (e) {
       console.warn('Unable to read auth from localStorage', e);
+      setIsLoggedIn(false);
     } finally {
       setCheckingAuth(false);
     }
@@ -423,6 +430,57 @@ function App() {
   };
 
   const [showFeedbackModal, setShowFeedbackModal] = useState(false);
+  const [showHelpModal, setShowHelpModal] = useState(false);
+
+  // Keyboard shortcuts handler
+  useEffect(() => {
+    const handleKeyPress = (e) => {
+      // Ignore if user is typing in an input field
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+        return;
+      }
+
+      switch (e.key.toLowerCase()) {
+        case 'escape':
+          // Close panels
+          if (rightCollapsed === false) {
+            setRightCollapsed(true);
+          }
+          if (showHelpModal) {
+            setShowHelpModal(false);
+          }
+          if (showFeedbackModal) {
+            setShowFeedbackModal(false);
+          }
+          break;
+
+        case 'r':
+          // Replay route
+          if (route && mapRef.current?.replay) {
+            mapRef.current.replay();
+          }
+          break;
+
+        case 'c':
+          // Clear route
+          if (route) {
+            handleClearRoute();
+          }
+          break;
+
+        case '?':
+          // Show help
+          setShowHelpModal(true);
+          break;
+
+        default:
+          break;
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, [route, rightCollapsed, showHelpModal, showFeedbackModal]);
 
   const handleFeedbackSubmit = async (rating, comment) => {
     let email = loginEmail;
@@ -618,7 +676,13 @@ function App() {
       />
 
       {/* Help Button */}
-      <HelpButton />
+      <HelpButton
+        isOpen={showHelpModal}
+        onOpenChange={setShowHelpModal}
+      />
+
+      {/* Keyboard Shortcut Hint */}
+      <KeyboardShortcutHint />
     </div>
   );
 }

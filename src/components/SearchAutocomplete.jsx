@@ -38,10 +38,9 @@ export function SearchAutocomplete({
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
-    if (!q) return places.slice(0, 20);
+    if (!q) return places;
     return places
-      .filter(p => p.name.toLowerCase().includes(q))
-      .slice(0, 20);
+      .filter(p => p.name.toLowerCase().includes(q));
   }, [query, places]);
 
   useEffect(() => {

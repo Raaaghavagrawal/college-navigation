@@ -7,8 +7,15 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['"DM Sans"', 'sans-serif'],
+                sans: ['"Raleway"', 'sans-serif'],
                 orbitron: ['Orbitron', 'sans-serif'],
+                roboto: ['Roboto', 'sans-serif'],
+                poppins: ['Poppins', 'sans-serif'],
+                montserrat: ['Montserrat', 'sans-serif'],
+                manrope: ['Manrope', 'sans-serif'],
+                raleway: ['Raleway', 'sans-serif'],
+                'suse-mono': ['"SUSE Mono"', 'monospace'],
+                'martel-sans': ['"Martel Sans"', 'sans-serif'],
             },
         },
     },

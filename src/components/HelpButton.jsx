@@ -2,8 +2,22 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiHelpCircle, FiX, FiMapPin, FiNavigation, FiZap, FiStar } from 'react-icons/fi';
 
-export function HelpButton() {
+export function HelpButton({ isOpen, onOpenChange }) {
     const [showHelp, setShowHelp] = useState(false);
+
+    // Sync with external control if provided
+    React.useEffect(() => {
+        if (isOpen !== undefined) {
+            setShowHelp(isOpen);
+        }
+    }, [isOpen]);
+
+    const handleToggle = (newState) => {
+        setShowHelp(newState);
+        if (onOpenChange) {
+            onOpenChange(newState);
+        }
+    };
 
     const tips = [
         {
@@ -38,7 +52,7 @@ export function HelpButton() {
             <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => setShowHelp(true)}
+                onClick={() => handleToggle(true)}
                 className="fixed bottom-6 left-6 z-40 flex items-center gap-2 px-4 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-full shadow-lg shadow-indigo-500/50 hover:shadow-indigo-500/70 transition-all"
             >
                 <FiHelpCircle className="text-lg" />
@@ -54,7 +68,7 @@ export function HelpButton() {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
-                            onClick={() => setShowHelp(false)}
+                            onClick={() => handleToggle(false)}
                             className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm"
                         />
 
@@ -77,7 +91,7 @@ export function HelpButton() {
                                         </p>
                                     </div>
                                     <button
-                                        onClick={() => setShowHelp(false)}
+                                        onClick={() => handleToggle(false)}
                                         className="p-2 hover:bg-slate-800 rounded-lg transition-colors"
                                     >
                                         <FiX className="text-xl text-slate-400" />

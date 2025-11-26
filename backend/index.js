@@ -8,7 +8,7 @@
 
    // Log connection configuration
    const dbConfig = {
-     host: process.env.DB_HOST || '10.138.121.99',
+     host: process.env.DB_HOST || '192.168.0.241',
      user: process.env.DB_USER || 'root',
      password: process.env.DB_PASSWORD || 'raghav23@',
      database: process.env.DB_NAME || 'bhhraman',

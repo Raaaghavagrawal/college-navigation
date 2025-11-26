@@ -7,22 +7,6 @@
     font-family: 'Raleway', sans-serif;
   }
 
-  body {
-    @apply font-sans antialiased;
-    background-color: #0f172a;
-    color: #e5e7eb;
-  }
-
-  /* Force Raleway on everything by default */
-  * {
-    font-family: 'Raleway', sans-serif;
-  }
-
-  /* Ensure form elements and placeholders inherit the font */
-  button,
-  input,
-  textarea,
-  select,
   ::placeholder,
   ::-webkit-input-placeholder,
   :-moz-placeholder,

@@ -1,6 +1,6 @@
 {
   "appId": "com.glbajaj.bhhraman",
   "appName": "Bhhraman",
-  "webDir": "/dist",
+  "webDir": "dist",
   "bundledWebRuntime": false
 }

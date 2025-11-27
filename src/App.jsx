@@ -170,6 +170,7 @@ function App() {
   const [route, setRoute] = useState(null);
   const [directions, setDirections] = useState([]);
   const [activeStepIndex, setActiveStepIndex] = useState(0);
+  const [hasReachedDestination, setHasReachedDestination] = useState(false);
 
   const mapRef = useRef(null);
   const [nodes, setNodes] = useState([]);
@@ -508,6 +509,7 @@ function App() {
     setRoute(null);
     setDirections([]);
     setActiveStepIndex(0);
+    setHasReachedDestination(false);
     setSidebarMode('search'); // Return to search view
     setSelectedPlace(null); // Clear selected place
     setShowFeedbackModal(true);
@@ -532,6 +534,20 @@ function App() {
 
     setActiveStepIndex(activeIndex);
   }, [directions]);
+
+  const handleNavigationComplete = React.useCallback(() => {
+    setHasReachedDestination(true);
+    // On mobile, automatically switch to "reached" view
+    if (isMobile) {
+      setSidebarMode('reached');
+      setLeftCollapsed(false); // Ensure sidebar is visible
+    }
+  }, [isMobile]);
+
+  const handleReplayRoute = React.useCallback(() => {
+    setHasReachedDestination(false); // Reset reached state
+    mapRef.current?.replay?.();
+  }, []);
 
   const activeStep =
     directions && directions.length && activeStepIndex < directions.length
@@ -621,6 +637,7 @@ function App() {
               onReload={() => {
                 // data auto-reloads on mount
               }}
+              onReplayRoute={handleReplayRoute}
               isMobile={isMobile}
               mode={sidebarMode}
               selectedPlace={selectedPlace}
@@ -638,6 +655,7 @@ function App() {
               edges={edges}
               activeStepIndex={activeStepIndex}
               onSegmentChange={handleSegmentChange}
+              onNavigationComplete={handleNavigationComplete}
               enableAnimation={true}
             />
           </div>
@@ -659,7 +677,7 @@ function App() {
 
         <FloatingInstruction
           step={activeStep}
-          isVisible={!!route}
+          isVisible={!!route && !hasReachedDestination}
           isMobile={isMobile}
         />
       </div>

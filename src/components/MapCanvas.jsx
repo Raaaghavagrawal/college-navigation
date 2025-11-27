@@ -14,7 +14,7 @@ const VIEWBOX_WIDTH = 1500;  // matches lng range (x-axis)
 const VIEWBOX_HEIGHT = 1286; // matches lat range (y-axis)
 
 export const MapCanvas = forwardRef(function MapCanvas(
-  { backgroundUrl, route, edges, activeStepIndex, onSegmentChange, enableAnimation = true },
+  { backgroundUrl, route, edges, activeStepIndex, onSegmentChange, enableAnimation = true, onNavigationComplete },
   ref,
 ) {
   const containerRef = useRef(null);
@@ -61,6 +61,9 @@ export const MapCanvas = forwardRef(function MapCanvas(
       },
       onComplete: () => {
         setIsPlaying(false);
+        if (onNavigationComplete) {
+          onNavigationComplete();
+        }
       },
       onSegmentChange: index => {
         if (onSegmentChange) onSegmentChange(index);
@@ -69,7 +72,7 @@ export const MapCanvas = forwardRef(function MapCanvas(
 
     setIsPlaying(true);
     animatorRef.current.play();
-  }, [route, onSegmentChange]);
+  }, [route, onSegmentChange, onNavigationComplete]);
 
   useImperativeHandle(ref, () => ({
     replay() {
@@ -326,21 +329,21 @@ export const MapCanvas = forwardRef(function MapCanvas(
         </motion.div>
       </motion.div>
 
-      {/* Map controls */}
-      <div className="pointer-events-none absolute bottom-4 left-4 flex flex-col gap-2 z-50">
-        <div className="pointer-events-auto inline-flex flex-col rounded-2xl bg-slate-900/80 border border-slate-800/80 shadow-lg shadow-black/60">
-          <IconButton label="Zoom in" onClick={() => zoomBy(0.2)}>
-            <FiPlus className="text-sm" />
+      {/* Map controls - Responsive positioning */}
+      <div className="pointer-events-none absolute top-16 left-2 md:top-auto md:bottom-4 md:left-4 flex flex-col gap-1.5 md:gap-2 z-50">
+        <div className="pointer-events-auto inline-flex flex-col rounded-xl md:rounded-2xl bg-slate-900/80 border border-slate-800/80 shadow-lg shadow-black/60">
+          <IconButton label="Zoom in" onClick={() => zoomBy(0.2)} className="p-1.5 md:p-2">
+            <FiPlus className="text-xs md:text-sm" />
           </IconButton>
-          <IconButton label="Zoom out" onClick={() => zoomBy(-0.2)}>
-            <FiMinus className="text-sm" />
+          <IconButton label="Zoom out" onClick={() => zoomBy(-0.2)} className="p-1.5 md:p-2">
+            <FiMinus className="text-xs md:text-sm" />
           </IconButton>
-          <IconButton label="Recenter" onClick={recenter}>
-            <FiTarget className="text-sm" />
+          <IconButton label="Recenter" onClick={recenter} className="p-1.5 md:p-2">
+            <FiTarget className="text-xs md:text-sm" />
           </IconButton>
         </div>
 
-        <div className="pointer-events-auto mt-2 inline-flex items-center gap-1 rounded-2xl bg-slate-900/80 border border-slate-800/80 px-2 py-1 text-[11px] text-slate-300">
+        <div className="pointer-events-auto mt-1 md:mt-2 inline-flex items-center gap-1 rounded-xl md:rounded-2xl bg-slate-900/80 border border-slate-800/80 px-1.5 md:px-2 py-0.5 md:py-1 text-[10px] md:text-[11px] text-slate-300">
           <IconButton
             label={isPlaying ? 'Pause route animation' : 'Play route animation'}
             onClick={() => {
@@ -353,11 +356,11 @@ export const MapCanvas = forwardRef(function MapCanvas(
                 setIsPlaying(true);
               }
             }}
-            className="h-7 w-7"
+            className="h-6 w-6 md:h-7 md:w-7"
           >
-            {isPlaying ? <FiPause className="text-xs" /> : <FiPlay className="text-xs" />}
+            {isPlaying ? <FiPause className="text-[10px] md:text-xs" /> : <FiPlay className="text-[10px] md:text-xs" />}
           </IconButton>
-          <span className="pr-1">Route</span>
+          <span className="pr-0.5 md:pr-1">Route</span>
         </div>
       </div>
     </div>
@@ -378,6 +381,7 @@ MapCanvas.propTypes = {
   edges: PropTypes.arrayOf(PropTypes.object),
   activeStepIndex: PropTypes.number,
   onSegmentChange: PropTypes.func,
+  onNavigationComplete: PropTypes.func,
 };
 
 export default MapCanvas;

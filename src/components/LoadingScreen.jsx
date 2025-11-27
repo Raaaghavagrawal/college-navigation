@@ -97,9 +97,9 @@ export function LoadingScreen({ isLoading, onComplete }) {
                         duration: 1.2,
                         ease: [0.34, 1.56, 0.64, 1],
                     }}
-                    className="relative z-10 text-center"
+                    className="relative z-10 text-center px-4"
                 >
-                    {/* Logo with enhanced glow */}
+                    {/* Logo with enhanced glow - Responsive sizing */}
                     <motion.div
                         animate={{
                             y: [0, -20, 0],
@@ -109,40 +109,40 @@ export function LoadingScreen({ isLoading, onComplete }) {
                             repeat: Infinity,
                             ease: 'easeInOut',
                         }}
-                        className="text-[120px] font-black mb-4 tracking-[0.5rem] relative font-orbitron"
+                        className="text-[60px] sm:text-[80px] md:text-[100px] lg:text-[120px] font-black mb-3 sm:mb-4 tracking-[0.2rem] sm:tracking-[0.3rem] md:tracking-[0.5rem] relative font-orbitron"
                         style={{
                             background: 'linear-gradient(135deg, #38bdf8 0%, #0ea5e9 50%, #06b6d4 100%)',
                             WebkitBackgroundClip: 'text',
                             WebkitTextFillColor: 'transparent',
                             backgroundClip: 'text',
-                            filter: 'drop-shadow(0 0 40px rgba(56, 189, 248, 0.8)) drop-shadow(0 0 80px rgba(56, 189, 248, 0.4))',
+                            filter: 'drop-shadow(0 0 30px rgba(56, 189, 248, 0.8)) drop-shadow(0 0 60px rgba(56, 189, 248, 0.4))',
                         }}
                     >
                         BHHRAMAN
                     </motion.div>
 
-                    {/* Tagline */}
+                    {/* Tagline - Responsive sizing */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 1, delay: 0.3 }}
-                        className="text-lg text-sky-400/80 font-light mb-2 tracking-[0.3rem] italic"
+                        className="text-sm sm:text-base md:text-lg text-sky-400/80 font-light mb-1 sm:mb-2 tracking-[0.15rem] sm:tracking-[0.2rem] md:tracking-[0.3rem] italic"
                     >
                         Navigate Your Campus
                     </motion.div>
 
-                    {/* Subtitle */}
+                    {/* Subtitle - Responsive sizing */}
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 1, delay: 0.5 }}
-                        className="text-3xl text-slate-500 font-medium mb-12 tracking-[0.25rem]"
+                        className="text-xl sm:text-2xl md:text-3xl text-slate-500 font-medium mb-8 sm:mb-10 md:mb-12 tracking-[0.15rem] sm:tracking-[0.2rem] md:tracking-[0.25rem]"
                     >
                         by GL Bajaj
                     </motion.div>
 
-                    {/* Enhanced Spinner with pulse effect */}
-                    <div className="w-24 h-24 mx-auto mb-10 relative">
+                    {/* Enhanced Spinner with pulse effect - Responsive sizing */}
+                    <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 mx-auto mb-6 sm:mb-8 md:mb-10 relative">
                         <div
                             className="absolute inset-0 rounded-full animate-ping"
                             style={{
@@ -153,22 +153,22 @@ export function LoadingScreen({ isLoading, onComplete }) {
                         <div
                             className="w-full h-full rounded-full animate-spin relative"
                             style={{
-                                border: '5px solid rgba(56, 189, 248, 0.15)',
+                                border: '4px solid rgba(56, 189, 248, 0.15)',
                                 borderTopColor: '#38bdf8',
                                 borderRightColor: '#0ea5e9',
-                                boxShadow: '0 0 40px rgba(56, 189, 248, 0.6), inset 0 0 20px rgba(56, 189, 248, 0.2)',
+                                boxShadow: '0 0 30px rgba(56, 189, 248, 0.6), inset 0 0 15px rgba(56, 189, 248, 0.2)',
                             }}
                         />
                     </div>
 
-                    {/* Progress Bar with enhanced styling */}
-                    <div className="w-[450px] max-w-[90vw] mx-auto mb-4">
-                        <div className="h-2 bg-slate-900/80 rounded-full overflow-hidden relative backdrop-blur-sm border border-slate-800/50">
+                    {/* Progress Bar with enhanced styling - Fully responsive */}
+                    <div className="w-full max-w-[280px] sm:max-w-[350px] md:max-w-[450px] mx-auto mb-3 sm:mb-4 px-2">
+                        <div className="h-1.5 sm:h-2 bg-slate-900/80 rounded-full overflow-hidden relative backdrop-blur-sm border border-slate-800/50">
                             <motion.div
                                 className="h-full rounded-full relative"
                                 style={{
                                     background: 'linear-gradient(90deg, #38bdf8 0%, #0ea5e9 50%, #06b6d4 100%)',
-                                    boxShadow: '0 0 30px rgba(56, 189, 248, 0.8), 0 0 60px rgba(56, 189, 248, 0.4)',
+                                    boxShadow: '0 0 20px rgba(56, 189, 248, 0.8), 0 0 40px rgba(56, 189, 248, 0.4)',
                                 }}
                                 initial={{ width: '0%' }}
                                 animate={{ width: `${progress}%` }}
@@ -186,48 +186,48 @@ export function LoadingScreen({ isLoading, onComplete }) {
                         </div>
                     </div>
 
-                    {/* Progress Text with percentage */}
+                    {/* Progress Text with percentage - Responsive sizing */}
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 1 }}
-                        className="flex items-center justify-center gap-3"
+                        className="flex items-center justify-center gap-2 sm:gap-3"
                     >
-                        <span className="text-slate-600 text-sm font-medium">Loading</span>
-                        <div className="flex gap-1">
+                        <span className="text-slate-600 text-xs sm:text-sm font-medium">Loading</span>
+                        <div className="flex gap-0.5 sm:gap-1">
                             <motion.span
                                 animate={{ opacity: [0.3, 1, 0.3] }}
                                 transition={{ duration: 1.5, repeat: Infinity, delay: 0 }}
-                                className="text-sky-400"
+                                className="text-sky-400 text-xs sm:text-sm"
                             >
                                 •
                             </motion.span>
                             <motion.span
                                 animate={{ opacity: [0.3, 1, 0.3] }}
                                 transition={{ duration: 1.5, repeat: Infinity, delay: 0.2 }}
-                                className="text-sky-400"
+                                className="text-sky-400 text-xs sm:text-sm"
                             >
                                 •
                             </motion.span>
                             <motion.span
                                 animate={{ opacity: [0.3, 1, 0.3] }}
                                 transition={{ duration: 1.5, repeat: Infinity, delay: 0.4 }}
-                                className="text-sky-400"
+                                className="text-sky-400 text-xs sm:text-sm"
                             >
                                 •
                             </motion.span>
                         </div>
-                        <span className="text-sky-400 text-sm font-bold tabular-nums">
+                        <span className="text-sky-400 text-xs sm:text-sm font-bold tabular-nums">
                             {Math.round(progress)}%
                         </span>
                     </motion.div>
 
-                    {/* Loading tip */}
+                    {/* Loading tip - Responsive sizing */}
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 1.5 }}
-                        className="mt-8 text-slate-700 text-xs font-light max-w-md mx-auto"
+                        className="mt-6 sm:mt-8 text-slate-700 text-[10px] sm:text-xs font-light max-w-[90%] sm:max-w-md mx-auto px-2"
                     >
                         Preparing your navigation experience...
                     </motion.div>

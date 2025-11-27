@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "name": "MESS, CAFETERIA AND GYM",
+    "name": "MESS AND CAFETERIA",
     "x": 788,
     "y": 790,
     "description": "The central dining facility and fitness center for students. Features a spacious mess hall serving breakfast, lunch, and dinner, along with a modern cafeteria offering snacks and beverages. The gym is equipped with state-of-the-art fitness equipment and is open to all students and faculty."
@@ -40,6 +40,7 @@
     "name": "MAIN GROUND ENTRY",
     "x": 534,
     "y": 692,
+    "image": "/images/playground.png",
     "description": "Primary access point to the main sports ground and athletic facilities. The ground hosts various sports activities, annual sports meets, and outdoor events. Features include cricket pitch, football field, and running track."
   },
   {
@@ -76,150 +77,180 @@
     "id": 11,
     "name": "COW SHELTER",
     "x": 1370,
-    "y": 1037
+    "y": 1037,
+    "description": "A dedicated shelter for cows within the campus, reflecting the institution's commitment to animal welfare and sustainable practices."
   },
   {
     "id": 12,
     "name": "GENSET",
     "x": 1369,
-    "y": 862
+    "y": 862,
+    "description": "The generator set area ensures uninterrupted power supply to the entire campus during power outages, maintaining essential services and academic activities."
   },
   {
     "id": 13,
     "name": "SECURITY GUARD ROOM GATE 2",
     "x": 1444,
-    "y": 699
+    "y": 699,
+    "description": "Security personnel station at Gate 2, monitoring entry and exit to ensure the safety and security of the campus premises."
   },
   {
     "id": 14,
     "name": "MAIN GATE 2",
     "x": 1480,
-    "y": 646
+    "y": 646,
+    "description": "Secondary entrance to the campus, facilitating smooth traffic flow and providing convenient access for students and staff coming from different directions."
   },
   {
     "id": 15,
     "name": "WASTE RECYCLING AREA",
     "x": 1445,
-    "y": 594
+    "y": 594,
+    "description": "Designated area for waste segregation and recycling, promoting environmental sustainability and responsible waste management on campus."
   },
   {
     "id": 16,
     "name": "STUDENTS LUNCH AREA",
     "x": 1413,
-    "y": 556
+    "y": 556,
+    "description": "A designated open space for students to have their lunch and relax during breaks, fostering social interaction and community."
   },
   {
     "id": 17,
     "name": "STATIONARY SHOP",
     "x": 1140,
-    "y": 745
+    "y": 745,
+    "description": "On-campus shop providing students with essential academic supplies, stationery, and other daily necessities."
   },
   {
     "id": 18,
     "name": "SPORTS ROOM",
     "x": 1138,
-    "y": 855
+    "y": 855,
+    "description": "Facility for indoor sports and equipment storage, supporting the physical well-being and recreational activities of students."
   },
   {
     "id": 19,
     "name": "GYM",
     "x": 934,
-    "y": 797
+    "y": 797,
+    "description": "Fitness center equipped with modern exercise machines and weights, encouraging a healthy lifestyle among students and faculty."
   },
   {
     "id": 20,
     "name": "FUTSAL GROUND",
     "x": 850,
-    "y": 967
+    "y": 967,
+    "image": "/images/futsalground.png",
+    "description": "Specialized ground for futsal enthusiasts, hosting matches and practice sessions for this fast-paced football variant."
   },
   {
     "id": 21,
     "name": "BASKETBALL GROUND",
     "x": 1045,
-    "y": 1046
+    "y": 1046,
+    "image": "/images/basketballground.png",
+    "description": "Standard basketball court for practice and tournaments, a popular spot for sports enthusiasts and team events."
   },
   {
     "id": 22,
     "name": "BADMINTON GROUND",
     "x": 1136,
-    "y": 1047
+    "y": 1047,
+    "image": "/images/badmintonground.png",
+    "description": "Outdoor badminton courts available for students and staff to enjoy the sport and stay active."
   },
   {
     "id": 23,
     "name": "VOLLEYBALL GROUND",
     "x": 1182,
-    "y": 1115
+    "y": 1115,
+    "description": "Dedicated court for volleyball, hosting regular matches and providing a space for team sports and physical activity."
   },
   {
     "id": 24,
     "name": "TRAINING AND PLACEMENT CELL",
     "x": 1186,
-    "y": 504
+    "y": 504,
+    "description": "The career hub of the college, facilitating campus recruitments, internships, and professional training for students."
   },
   {
     "id": 25,
     "name": "CAMPUS SHOP",
     "x": 1183,
-    "y": 355
+    "y": 355,
+    "description": "General store within the campus offering snacks, beverages, and other convenience items for the college community."
   },
   {
     "id": 26,
     "name": "ACCOUNTS AND REGISTRAR OFFICE",
     "x": 949,
-    "y": 339
+    "y": 339,
+    "description": "Administrative center handling student records, fee payments, and other official documentation and inquiries."
   },
   {
     "id": 27,
     "name": "ADMISSION CELL",
     "x": 904,
-    "y": 520
+    "y": 520,
+    "description": "Information and processing center for prospective students, handling inquiries, applications, and the admission process."
   },
   {
     "id": 28,
     "name": "SECURITY GUARD ROOM GATE 1",
     "x": 692,
-    "y": 165
+    "y": 165,
+    "description": "Main security post at Gate 1, ensuring controlled access and maintaining a secure environment for the campus."
   },
   {
     "id": 29,
     "name": "COLLEGE LAWN ENTRY",
     "x": 369,
-    "y": 191
+    "y": 191,
+    "description": "Entrance to the lush green college lawn, a serene spot for relaxation, outdoor study, and campus events."
   },
   {
     "id": 30,
     "name": "COLLEGE LIBRARY",
     "x": 391,
-    "y": 435
+    "y": 435,
+    "description": "A vast repository of knowledge featuring a wide collection of books, journals, and digital resources, along with quiet study areas."
   },
   {
     "id": 31,
     "name": "SBG HALL ENTRY (2ND FLOOR)",
     "x": 677,
-    "y": 422
+    "y": 422,
+    "description": "Entrance to the SBG Hall on the second floor, a venue for seminars, guest lectures, and academic gatherings."
   },
   {
     "id": 32,
     "name": "SHD HALL ENTRY (2ND FLOOR)",
     "x": 1054,
-    "y": 560
+    "y": 560,
+    "description": "Access point to the SHD Hall on the second floor, used for workshops, conferences, and student activities."
   },
   {
     "id": 33,
     "name": "SEATING AREA",
     "x": 750,
-    "y": 943
+    "y": 943,
+    "image": "/images/seating area.png",
+    "description": "Comfortable outdoor seating space for students to socialize, study, or simply unwind amidst the campus greenery."
   },
   {
     "id": 34,
     "name": "GIRLS HOSTEL ENTRY",
     "x": 350,
-    "y": 1173
+    "y": 1173,
+    "image": "/images/girlshostelentry.png",
+    "description": "Secure entrance to the Girls' Hostel, ensuring privacy and safety for female residents with restricted access."
   },
   {
     "id": 35,
     "name": "GUEST HOUSE & STAFF QUARTERS",
     "x": 271,
-    "y": 1089
+    "y": 1089,
+    "description": "Accommodation facility for visiting guests and residential quarters for faculty and staff, providing comfortable living spaces on campus."
   }
 ]

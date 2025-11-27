@@ -27,6 +27,7 @@ export function LeftSidebar({
   onFindRoute,
   onClearRoute,
   onReload,
+  onReplayRoute,
   isMobile,
   mode = 'search', // Default to search
   selectedPlace,
@@ -200,11 +201,86 @@ export function LeftSidebar({
     );
   };
 
+  // --- VIEW: REACHED DESTINATION ---
+  const renderReached = () => {
+    const endPlace = places.find(p => p.id === endId);
+    const endName = endPlace?.name || 'Destination';
+
+    return (
+      <div className="flex h-full flex-col bg-slate-900">
+        {/* Success Header */}
+        <div className="relative flex-shrink-0 bg-gradient-to-br from-emerald-600 to-emerald-700 p-6 text-center">
+          <div className="mb-3">
+            <div className="mx-auto w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+              <FiNavigation className="text-3xl text-white" />
+            </div>
+          </div>
+          <h2 className="text-xl font-bold text-white mb-1">You've Arrived!</h2>
+          <p className="text-sm text-emerald-100">at {endName}</p>
+        </div>
+
+        {/* Content */}
+        <div className="flex-1 overflow-y-auto p-5">
+          <div className="space-y-4">
+            <div className="rounded-xl bg-slate-800/50 border border-slate-700/50 p-4">
+              <h3 className="text-sm font-medium text-slate-300 mb-2">Journey Complete</h3>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                You have successfully reached your destination. We hope you had a smooth navigation experience!
+              </p>
+            </div>
+
+            {endPlace?.description && (
+              <div className="rounded-xl bg-slate-800/50 border border-slate-700/50 p-4">
+                <h3 className="text-sm font-medium text-slate-300 mb-2">About this location</h3>
+                <p className="text-xs text-slate-400 leading-relaxed">
+                  {endPlace.description}
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex-shrink-0 p-4 border-t border-slate-800/50 space-y-2">
+          <Button
+            onClick={onClearRoute}
+            variant="primary"
+            className="w-full"
+          >
+            Done
+          </Button>
+          <div className="flex gap-2">
+            <Button
+              onClick={() => {
+                if (onReplayRoute) onReplayRoute();
+              }}
+              variant="secondary"
+              className="flex-1"
+            >
+              <FiRefreshCw className="mr-1.5 text-sm" />
+              Replay Route
+            </Button>
+            <Button
+              onClick={() => {
+                if (onModeChange) onModeChange('search');
+              }}
+              variant="secondary"
+              className="flex-1"
+            >
+              Exit Navigation
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   const sidebarContent = (
     <>
       {mode === 'search' && renderSearch()}
       {mode === 'details' && renderDetails()}
       {mode === 'directions' && renderDirections()}
+      {mode === 'reached' && renderReached()}
     </>
   );
 
@@ -267,6 +343,7 @@ LeftSidebar.propTypes = {
   onFindRoute: PropTypes.func.isRequired,
   onClearRoute: PropTypes.func.isRequired,
   onReload: PropTypes.func.isRequired,
+  onReplayRoute: PropTypes.func,
   isMobile: PropTypes.bool,
   mode: PropTypes.string,
   selectedPlace: PropTypes.object,

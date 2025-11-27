@@ -10,6 +10,7 @@ import { LoadingScreen } from './components/LoadingScreen.jsx';
 import HelpButton from './components/HelpButton.jsx';
 import { KeyboardShortcutHint } from './components/KeyboardShortcutHint.jsx';
 import { generateDirections, PIXELS_TO_METERS } from './utils/pathfinding.js';
+import { API_ENDPOINTS } from './config/api.js';
 
 // Map image path - file is in public folder
 // If you renamed the file to remove space, use: '/GLBITM_Map.jpg'
@@ -134,7 +135,7 @@ function App() {
 
     setLoginLoading(true);
     try {
-      const res = await fetch('http://localhost:4000/api/login', {
+      const res = await fetch(API_ENDPOINTS.LOGIN, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: loginEmail, phone: loginPhone, password: loginPassword }),
@@ -495,7 +496,7 @@ function App() {
     if (!email) email = 'guest@example.com';
 
     try {
-      await fetch('http://localhost:4000/api/feedback', {
+      await fetch(API_ENDPOINTS.FEEDBACK, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, rating, comment }),

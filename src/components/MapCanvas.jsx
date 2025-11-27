@@ -330,7 +330,7 @@ export const MapCanvas = forwardRef(function MapCanvas(
       </motion.div>
 
       {/* Map controls - Responsive positioning */}
-      <div className="pointer-events-none absolute top-16 left-2 md:top-auto md:bottom-4 md:left-4 flex flex-col gap-1.5 md:gap-2 z-50">
+      <div className="pointer-events-none absolute top-5 left-2 md:top-auto md:bottom-4 md:left-4 flex flex-col gap-1.5 md:gap-2 z-50">
         <div className="pointer-events-auto inline-flex flex-col rounded-xl md:rounded-2xl bg-slate-900/80 border border-slate-800/80 shadow-lg shadow-black/60">
           <IconButton label="Zoom in" onClick={() => zoomBy(0.2)} className="p-1.5 md:p-2">
             <FiPlus className="text-xs md:text-sm" />

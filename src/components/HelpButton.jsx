@@ -53,10 +53,10 @@ export function HelpButton({ isOpen, onOpenChange }) {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => handleToggle(true)}
-                className="fixed bottom-6 left-6 z-40 flex items-center gap-2 px-4 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-full shadow-lg shadow-indigo-500/50 hover:shadow-indigo-500/70 transition-all"
+                className="fixed bottom-6 left-6 z-40 flex items-center justify-center gap-2 p-3 md:px-4 md:py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-full shadow-lg shadow-indigo-500/50 hover:shadow-indigo-500/70 transition-all"
             >
-                <FiHelpCircle className="text-lg" />
-                <span className="text-sm font-medium">Help</span>
+                <FiHelpCircle className="text-xl md:text-lg" />
+                <span className="hidden md:inline text-sm font-medium">Help</span>
             </motion.button>
 
             {/* Help Modal */}

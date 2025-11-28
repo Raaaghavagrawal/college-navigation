@@ -12,10 +12,21 @@ import { KeyboardShortcutHint } from './components/KeyboardShortcutHint.jsx';
 import { generateDirections, PIXELS_TO_METERS } from './utils/pathfinding.js';
 import { API_ENDPOINTS } from './config/api.js';
 
-// Map image path - file is in public folder
-// If you renamed the file to remove space, use: '/GLBITM_Map.jpg'
-// Otherwise, keep the space and it will be URL encoded automatically
-const MAP_IMAGE_PATH = '/GLBITM Map.jpg';
+// Map configurations
+const MAPS = {
+  itm: {
+    id: 'itm',
+    name: 'GL Bajaj ITM',
+    image: '/GLBITM Map.jpg',
+    transitionNodeId: 14 // MAIN GATE 2
+  },
+  ctm: {
+    id: 'ctm',
+    name: 'GL Bajaj CTM',
+    image: '/GLbajaj CTM.jpeg',
+    transitionNodeId: 100 // CTM MAIN GATE
+  }
+};
 
 function useIsMobile() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
@@ -173,6 +184,11 @@ function App() {
   const [activeStepIndex, setActiveStepIndex] = useState(0);
   const [hasReachedDestination, setHasReachedDestination] = useState(false);
 
+  // Multi-map state
+  const [currentMapId, setCurrentMapId] = useState('itm');
+  const [routeSequence, setRouteSequence] = useState(null);
+  const [currentRouteIndex, setCurrentRouteIndex] = useState(0);
+
   const mapRef = useRef(null);
   const [nodes, setNodes] = useState([]);
   const [edges, setEdges] = useState([]);
@@ -308,127 +324,130 @@ function App() {
     const sId = typeof startId === 'number' ? startId : parseInt(startId, 10);
     const eId = typeof endId === 'number' ? endId : parseInt(endId, 10);
 
-    // Try to find a manually traced route first (from routes.json)
-    let isReverse = false;
-    const manual =
-      routesData.find(r => {
+    const startNode = placesById[sId];
+    const endNode = placesById[eId];
+
+    if (!startNode || !endNode) {
+      console.error('Invalid start or end node');
+      return;
+    }
+
+    // Helper to calculate route between two points on the SAME map
+    const calculateRoute = (fromId, toId) => {
+      // Try to find a manually traced route first (from routes.json)
+      let isReverse = false;
+      const manual = routesData.find(r => {
         const routeStart = typeof r.start === 'number' ? r.start : parseInt(r.start, 10);
         const routeEnd = typeof r.end === 'number' ? r.end : parseInt(r.end, 10);
-
-        if (routeStart === sId && routeEnd === eId) {
+        if (routeStart === fromId && routeEnd === toId) {
           isReverse = false;
           return true;
         }
-        if (routeStart === eId && routeEnd === sId) {
+        if (routeStart === toId && routeEnd === fromId) {
           isReverse = true;
           return true;
         }
         return false;
       }) || null;
 
-    const startNode = placesById[sId];
-    const endNode = placesById[eId];
+      const fNode = placesById[fromId];
+      const tNode = placesById[toId];
+      let points = [];
+      let length = 0;
 
-    let points = [];
-    let length = 0;
-
-    if (manual) {
-      // Use manual route from routes.json
-      let coords =
-        manual.geom?.geometry?.coordinates?.length
+      if (manual) {
+        // Use manual route from routes.json
+        let coords = manual.geom?.geometry?.coordinates?.length
           ? manual.geom.geometry.coordinates
           : manual.path || [];
+        coords = [...coords];
+        if (isReverse) coords.reverse();
 
-      // Clone coords to avoid mutating the original data
-      coords = [...coords];
-
-      if (isReverse) {
-        coords.reverse();
-      }
-
-      if (coords.length >= 2) {
-        points = coords
-          .filter(
-            coord =>
-              coord &&
-              coord.length >= 2 &&
-              typeof coord[0] === 'number' &&
-              typeof coord[1] === 'number',
-          )
-          .map(([x, y], idx, arr) => ({
-            x: Number(x),
-            y: Number(y),
-            placeId:
-              idx === 0 ? startNode?.id : idx === arr.length - 1 ? endNode?.id : undefined,
-          }));
-        // Recompute length from coordinates in pixels to be precise
-        length = polylinePixels(coords);
-      }
-    } else if (Object.keys(adj).length) {
-      // Use Dijkstra over edges if no manual route
-      const result = dijkstra(adj, String(sId), String(eId));
-      if (result && result.path && result.path.length > 1) {
-        const seq = [];
-        for (let i = 0; i < result.path.length - 1; i++) {
-          const from = result.path[i];
-          const to = result.path[i + 1];
-          const edge = edgeMap[`${from}-${to}`];
-          if (edge && edge.geom && edge.geom.geometry && edge.geom.geometry.coordinates) {
-            const coords = edge.geom.geometry.coordinates;
-            if (!seq.length) {
-              seq.push(...coords);
-            } else {
-              // avoid duplicating join point
-              seq.push(...coords.slice(1));
-            }
-          } else {
-            const fn = placesById[from];
-            const tn = placesById[to];
-            if (fn && tn) {
-              seq.push([fn.x, fn.y], [tn.x, tn.y]);
-            }
-          }
-        }
-        if (seq.length >= 2) {
-          points = seq
-            .filter(
-              coord =>
-                coord &&
-                coord.length >= 2 &&
-                typeof coord[0] === 'number' &&
-                typeof coord[1] === 'number',
-            )
+        if (coords.length >= 2) {
+          points = coords
+            .filter(c => c && c.length >= 2 && typeof c[0] === 'number' && typeof c[1] === 'number')
             .map(([x, y], idx, arr) => ({
               x: Number(x),
               y: Number(y),
-              placeId:
-                idx === 0 ? startNode?.id : idx === arr.length - 1 ? endNode?.id : undefined,
+              placeId: idx === 0 ? fNode?.id : idx === arr.length - 1 ? tNode?.id : undefined,
             }));
-          length = result.distance ?? 0;
+          length = polylinePixels(coords);
+        }
+      } else if (Object.keys(adj).length) {
+        // Use Dijkstra over edges if no manual route
+        const result = dijkstra(adj, String(fromId), String(toId));
+        if (result && result.path && result.path.length > 1) {
+          const seq = [];
+          for (let i = 0; i < result.path.length - 1; i++) {
+            const from = result.path[i];
+            const to = result.path[i + 1];
+            const edge = edgeMap[`${from}-${to}`];
+            if (edge && edge.geom?.geometry?.coordinates) {
+              const coords = edge.geom.geometry.coordinates;
+              if (!seq.length) seq.push(...coords);
+              else seq.push(...coords.slice(1));
+            } else {
+              const fn = placesById[from];
+              const tn = placesById[to];
+              if (fn && tn) seq.push([fn.x, fn.y], [tn.x, tn.y]);
+            }
+          }
+          if (seq.length >= 2) {
+            points = seq
+              .filter(c => c && c.length >= 2 && typeof c[0] === 'number' && typeof c[1] === 'number')
+              .map(([x, y], idx, arr) => ({
+                x: Number(x),
+                y: Number(y),
+                placeId: idx === 0 ? fNode?.id : idx === arr.length - 1 ? tNode?.id : undefined,
+              }));
+            length = result.distance ?? 0;
+          }
+        }
+      }
+
+      // Fallback to straight line between nodes if nothing else
+      if (!points.length && fNode && tNode) {
+        points = [
+          { x: fNode.x, y: fNode.y, placeId: fNode.id },
+          { x: tNode.x, y: tNode.y, placeId: tNode.id },
+        ];
+        length = Math.hypot(tNode.x - fNode.x, tNode.y - fNode.y);
+      }
+
+      if (points.length < 2) return null;
+      return { points, length };
+    };
+
+    let sequence = [];
+    const startMapId = startNode.mapId || 'itm';
+    const endMapId = endNode.mapId || 'itm';
+
+    if (startMapId === endMapId) {
+      const route = calculateRoute(sId, eId);
+      if (route) sequence.push({ mapId: startMapId, route });
+    } else {
+      // Cross-map routing
+      const map1 = MAPS[startMapId];
+      const map2 = MAPS[endMapId];
+      if (map1 && map2) {
+        const route1 = calculateRoute(sId, map1.transitionNodeId);
+        const route2 = calculateRoute(map2.transitionNodeId, eId);
+        if (route1 && route2) {
+          sequence.push({ mapId: startMapId, route: route1 });
+          sequence.push({ mapId: endMapId, route: route2 });
         }
       }
     }
 
-    // Fallback to straight line between nodes if nothing else
-    if (!points.length && startNode && endNode) {
-      points = [
-        { x: startNode.x, y: startNode.y, placeId: startNode.id },
-        { x: endNode.x, y: endNode.y, placeId: endNode.id },
-      ];
-      length = Math.hypot(endNode.x - startNode.x, endNode.y - startNode.y);
-    }
-
-    if (points.length < 2) {
-      console.error('❌ Route computation failed: insufficient points');
+    if (sequence.length > 0) {
+      setRouteSequence(sequence);
+      setCurrentRouteIndex(0);
+      loadRouteFromSequence(sequence[0]);
+      setLeftCollapsed(true); // Auto-close search panel
+    } else {
+      console.error('❌ Route computation failed');
       alert('Could not find a route between the selected locations. Please try different locations.');
-      return;
     }
-
-    const newRoute = { points, length };
-    setRoute(newRoute);
-    const steps = generateDirections(newRoute, placesById);
-    setDirections(steps);
-    setActiveStepIndex(0);
   };
 
   const [showFeedbackModal, setShowFeedbackModal] = useState(false);
@@ -511,6 +530,9 @@ function App() {
     setDirections([]);
     setActiveStepIndex(0);
     setHasReachedDestination(false);
+    setRouteSequence(null);
+    setCurrentRouteIndex(0);
+    setCurrentMapId('itm');
     setSidebarMode('search'); // Return to search view
     setSelectedPlace(null); // Clear selected place
     setShowFeedbackModal(true);
@@ -536,14 +558,30 @@ function App() {
     setActiveStepIndex(activeIndex);
   }, [directions]);
 
+  const loadRouteFromSequence = (seqItem) => {
+    setCurrentMapId(seqItem.mapId);
+    setRoute(seqItem.route);
+    const steps = generateDirections(seqItem.route, placesById);
+    setDirections(steps);
+    setActiveStepIndex(0);
+    setSidebarMode('directions');
+  };
+
   const handleNavigationComplete = React.useCallback(() => {
-    setHasReachedDestination(true);
-    // On mobile, automatically switch to "reached" view
-    if (isMobile) {
-      setSidebarMode('reached');
-      setLeftCollapsed(false); // Ensure sidebar is visible
+    if (routeSequence && currentRouteIndex < routeSequence.length - 1) {
+      // Move to next map
+      const nextIndex = currentRouteIndex + 1;
+      setCurrentRouteIndex(nextIndex);
+      loadRouteFromSequence(routeSequence[nextIndex]);
+    } else {
+      setHasReachedDestination(true);
+      // On mobile, automatically switch to "reached" view
+      if (isMobile) {
+        setSidebarMode('reached');
+        setLeftCollapsed(false); // Ensure sidebar is visible
+      }
     }
-  }, [isMobile]);
+  }, [isMobile, routeSequence, currentRouteIndex, placesById]);
 
   const handleReplayRoute = React.useCallback(() => {
     setHasReachedDestination(false); // Reset reached state
@@ -651,7 +689,7 @@ function App() {
           <div className="relative flex-1">
             <MapCanvas
               ref={mapRef}
-              backgroundUrl={MAP_IMAGE_PATH}
+              backgroundUrl={MAPS[currentMapId].image}
               route={route}
               edges={edges}
               activeStepIndex={activeStepIndex}
@@ -694,11 +732,13 @@ function App() {
         onComplete={() => setIsInitialLoading(false)}
       />
 
-      {/* Help Button */}
-      <HelpButton
-        isOpen={showHelpModal}
-        onOpenChange={setShowHelpModal}
-      />
+      {/* Help Button - Only show when no route is active */}
+      {!route && (
+        <HelpButton
+          isOpen={showHelpModal}
+          onOpenChange={setShowHelpModal}
+        />
+      )}
 
       {/* Keyboard Shortcut Hint */}
       <KeyboardShortcutHint />

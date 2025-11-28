@@ -4,7 +4,8 @@
     "name": "MESS AND CAFETERIA",
     "x": 788,
     "y": 790,
-    "description": "The central dining facility and fitness center for students. Features a spacious mess hall serving breakfast, lunch, and dinner, along with a modern cafeteria offering snacks and beverages. The gym is equipped with state-of-the-art fitness equipment and is open to all students and faculty."
+    "description": "The central dining facility and fitness center for students. Features a spacious mess hall serving breakfast, lunch, and dinner, along with a modern cafeteria offering snacks and beverages. The gym is equipped with state-of-the-art fitness equipment and is open to all students and faculty.",
+    "mapId": "itm"
   },
   {
     "id": 2,
@@ -12,28 +13,32 @@
     "x": 1058,
     "y": 268,
     "image": "/images/ab1.png",
-    "description": "Main entrance to Academic Block 1, housing various departments and lecture halls. This building is a hub for undergraduate engineering programs and features modern classrooms, laboratories, and faculty offices."
+    "description": "Main entrance to Academic Block 1, housing various departments and lecture halls. This building is a hub for undergraduate engineering programs and features modern classrooms, laboratories, and faculty offices.",
+    "mapId": "itm"
   },
   {
     "id": 3,
     "name": "BOYS HOSTEL SENIORS",
     "x": 1034,
     "y": 736,
-    "description": "Residential facility for senior male students, offering comfortable accommodation with modern amenities. Features include common rooms, study areas, and recreational facilities. The hostel provides a safe and conducive environment for academic growth."
+    "description": "Residential facility for senior male students, offering comfortable accommodation with modern amenities. Features include common rooms, study areas, and recreational facilities. The hostel provides a safe and conducive environment for academic growth.",
+    "mapId": "itm"
   },
   {
     "id": 4,
     "name": "AB 2 ENTRY POINT",
     "x": 690,
     "y": 422,
-    "description": "Main entrance to Academic Block 2, which houses additional departments, computer labs, and seminar halls. This building is known for its advanced technical facilities and collaborative learning spaces."
+    "description": "Main entrance to Academic Block 2, which houses additional departments, computer labs, and seminar halls. This building is known for its advanced technical facilities and collaborative learning spaces.",
+    "mapId": "itm"
   },
   {
     "id": 5,
     "name": "PGDM CANTEEN",
     "x": 286,
     "y": 450,
-    "description": "Exclusive canteen facility for PGDM students and faculty, offering a variety of food and beverage options in a comfortable setting. Popular spot for informal meetings and group discussions."
+    "description": "Exclusive canteen facility for PGDM students and faculty, offering a variety of food and beverage options in a comfortable setting. Popular spot for informal meetings and group discussions.",
+    "mapId": "itm"
   },
   {
     "id": 6,
@@ -41,7 +46,8 @@
     "x": 534,
     "y": 692,
     "image": "/images/playground.png",
-    "description": "Primary access point to the main sports ground and athletic facilities. The ground hosts various sports activities, annual sports meets, and outdoor events. Features include cricket pitch, football field, and running track."
+    "description": "Primary access point to the main sports ground and athletic facilities. The ground hosts various sports activities, annual sports meets, and outdoor events. Features include cricket pitch, football field, and running track.",
+    "mapId": "itm"
   },
   {
     "id": 7,
@@ -49,21 +55,24 @@
     "x": 752,
     "y": 172,
     "image": "/images/gate.png",
-    "description": "The primary entrance to GLBITM campus. This is the main access point for students, faculty, and visitors. Security personnel are stationed here 24/7 to ensure campus safety and manage entry protocols."
+    "description": "The primary entrance to GLBITM campus. This is the main access point for students, faculty, and visitors. Security personnel are stationed here 24/7 to ensure campus safety and manage entry protocols.",
+    "mapId": "itm"
   },
   {
     "id": 8,
     "name": "WORKSHOP",
     "x": 1138,
     "y": 984,
-    "description": "Engineering workshop facility equipped with various machines and tools for practical training. Students gain hands-on experience in manufacturing processes, machining, welding, and other technical skills essential for engineering education."
+    "description": "Engineering workshop facility equipped with various machines and tools for practical training. Students gain hands-on experience in manufacturing processes, machining, welding, and other technical skills essential for engineering education.",
+    "mapId": "itm"
   },
   {
     "id": 9,
     "name": "BOYS HOSTEL JUNIORS",
     "x": 86,
     "y": 858,
-    "description": "Residential accommodation for junior male students, providing a supportive living environment for first and second-year students. Features include shared rooms, common areas, and 24/7 security to ensure student welfare and safety."
+    "description": "Residential accommodation for junior male students, providing a supportive living environment for first and second-year students. Features include shared rooms, common areas, and 24/7 security to ensure student welfare and safety.",
+    "mapId": "itm"
   },
   {
     "id": 10,
@@ -71,70 +80,80 @@
     "x": 154,
     "y": 316,
     "image": "/images/pgdm.png",
-    "description": "Main entrance to the Post Graduate Diploma in Management block. This building houses classrooms, case study rooms, and facilities specifically designed for management education, including a dedicated library and seminar halls."
+    "description": "Main entrance to the Post Graduate Diploma in Management block. This building houses classrooms, case study rooms, and facilities specifically designed for management education, including a dedicated library and seminar halls.",
+    "mapId": "itm"
   },
   {
     "id": 11,
     "name": "COW SHELTER",
     "x": 1370,
     "y": 1037,
-    "description": "A dedicated shelter for cows within the campus, reflecting the institution's commitment to animal welfare and sustainable practices."
+    "description": "A dedicated shelter for cows within the campus, reflecting the institution's commitment to animal welfare and sustainable practices.",
+    "mapId": "itm"
   },
   {
     "id": 12,
     "name": "GENSET",
     "x": 1369,
     "y": 862,
-    "description": "The generator set area ensures uninterrupted power supply to the entire campus during power outages, maintaining essential services and academic activities."
+    "description": "The generator set area ensures uninterrupted power supply to the entire campus during power outages, maintaining essential services and academic activities.",
+    "mapId": "itm"
   },
   {
     "id": 13,
     "name": "SECURITY GUARD ROOM GATE 2",
     "x": 1444,
     "y": 699,
-    "description": "Security personnel station at Gate 2, monitoring entry and exit to ensure the safety and security of the campus premises."
+    "description": "Security personnel station at Gate 2, monitoring entry and exit to ensure the safety and security of the campus premises.",
+    "mapId": "itm"
   },
   {
     "id": 14,
     "name": "MAIN GATE 2",
     "x": 1480,
     "y": 646,
-    "description": "Secondary entrance to the campus, facilitating smooth traffic flow and providing convenient access for students and staff coming from different directions."
+    "description": "Secondary entrance to the campus, facilitating smooth traffic flow and providing convenient access for students and staff coming from different directions.",
+    "mapId": "itm"
   },
   {
     "id": 15,
     "name": "WASTE RECYCLING AREA",
     "x": 1445,
     "y": 594,
-    "description": "Designated area for waste segregation and recycling, promoting environmental sustainability and responsible waste management on campus."
+    "description": "Designated area for waste segregation and recycling, promoting environmental sustainability and responsible waste management on campus.",
+    "mapId": "itm"
   },
   {
     "id": 16,
     "name": "STUDENTS LUNCH AREA",
     "x": 1413,
     "y": 556,
-    "description": "A designated open space for students to have their lunch and relax during breaks, fostering social interaction and community."
+    "description": "A designated open space for students to have their lunch and relax during breaks, fostering social interaction and community.",
+    "mapId": "itm"
   },
   {
     "id": 17,
     "name": "STATIONARY SHOP",
     "x": 1140,
     "y": 745,
-    "description": "On-campus shop providing students with essential academic supplies, stationery, and other daily necessities."
+    "description": "On-campus shop providing students with essential academic supplies, stationery, and other daily necessities.",
+    "mapId": "itm"
   },
   {
     "id": 18,
     "name": "SPORTS ROOM",
     "x": 1138,
     "y": 855,
-    "description": "Facility for indoor sports and equipment storage, supporting the physical well-being and recreational activities of students."
+    "description": "Facility for indoor sports and equipment storage, supporting the physical well-being and recreational activities of students.",
+    "mapId": "itm"
   },
   {
     "id": 19,
     "name": "GYM",
     "x": 934,
     "y": 797,
-    "description": "Fitness center equipped with modern exercise machines and weights, encouraging a healthy lifestyle among students and faculty."
+    "description": "Fitness center equipped with modern exercise machines and weights, encouraging a healthy lifestyle among students and faculty.",
+    "mapId": "itm"
   },
   {
     "id": 20,
@@ -142,7 +161,8 @@
     "x": 850,
     "y": 967,
     "image": "/images/futsalground.png",
-    "description": "Specialized ground for futsal enthusiasts, hosting matches and practice sessions for this fast-paced football variant."
+    "description": "Specialized ground for futsal enthusiasts, hosting matches and practice sessions for this fast-paced football variant.",
+    "mapId": "itm"
   },
   {
     "id": 21,
@@ -150,7 +170,8 @@
     "x": 1045,
     "y": 1046,
     "image": "/images/basketballground.png",
-    "description": "Standard basketball court for practice and tournaments, a popular spot for sports enthusiasts and team events."
+    "description": "Standard basketball court for practice and tournaments, a popular spot for sports enthusiasts and team events.",
+    "mapId": "itm"
   },
   {
     "id": 22,
@@ -158,77 +179,88 @@
     "x": 1136,
     "y": 1047,
     "image": "/images/badmintonground.png",
-    "description": "Outdoor badminton courts available for students and staff to enjoy the sport and stay active."
+    "description": "Outdoor badminton courts available for students and staff to enjoy the sport and stay active.",
+    "mapId": "itm"
   },
   {
     "id": 23,
     "name": "VOLLEYBALL GROUND",
     "x": 1182,
     "y": 1115,
-    "description": "Dedicated court for volleyball, hosting regular matches and providing a space for team sports and physical activity."
+    "description": "Dedicated court for volleyball, hosting regular matches and providing a space for team sports and physical activity.",
+    "mapId": "itm"
   },
   {
     "id": 24,
     "name": "TRAINING AND PLACEMENT CELL",
     "x": 1186,
     "y": 504,
-    "description": "The career hub of the college, facilitating campus recruitments, internships, and professional training for students."
+    "description": "The career hub of the college, facilitating campus recruitments, internships, and professional training for students.",
+    "mapId": "itm"
   },
   {
     "id": 25,
     "name": "CAMPUS SHOP",
     "x": 1183,
     "y": 355,
-    "description": "General store within the campus offering snacks, beverages, and other convenience items for the college community."
+    "description": "General store within the campus offering snacks, beverages, and other convenience items for the college community.",
+    "mapId": "itm"
   },
   {
     "id": 26,
     "name": "ACCOUNTS AND REGISTRAR OFFICE",
     "x": 949,
     "y": 339,
-    "description": "Administrative center handling student records, fee payments, and other official documentation and inquiries."
+    "description": "Administrative center handling student records, fee payments, and other official documentation and inquiries.",
+    "mapId": "itm"
   },
   {
     "id": 27,
     "name": "ADMISSION CELL",
     "x": 904,
     "y": 520,
-    "description": "Information and processing center for prospective students, handling inquiries, applications, and the admission process."
+    "description": "Information and processing center for prospective students, handling inquiries, applications, and the admission process.",
+    "mapId": "itm"
   },
   {
     "id": 28,
     "name": "SECURITY GUARD ROOM GATE 1",
     "x": 692,
     "y": 165,
-    "description": "Main security post at Gate 1, ensuring controlled access and maintaining a secure environment for the campus."
+    "description": "Main security post at Gate 1, ensuring controlled access and maintaining a secure environment for the campus.",
+    "mapId": "itm"
   },
   {
     "id": 29,
     "name": "COLLEGE LAWN ENTRY",
     "x": 369,
     "y": 191,
-    "description": "Entrance to the lush green college lawn, a serene spot for relaxation, outdoor study, and campus events."
+    "description": "Entrance to the lush green college lawn, a serene spot for relaxation, outdoor study, and campus events.",
+    "mapId": "itm"
   },
   {
     "id": 30,
     "name": "COLLEGE LIBRARY",
     "x": 391,
     "y": 435,
-    "description": "A vast repository of knowledge featuring a wide collection of books, journals, and digital resources, along with quiet study areas."
+    "description": "A vast repository of knowledge featuring a wide collection of books, journals, and digital resources, along with quiet study areas.",
+    "mapId": "itm"
   },
   {
     "id": 31,
     "name": "SBG HALL ENTRY (2ND FLOOR)",
     "x": 677,
     "y": 422,
-    "description": "Entrance to the SBG Hall on the second floor, a venue for seminars, guest lectures, and academic gatherings."
+    "description": "Entrance to the SBG Hall on the second floor, a venue for seminars, guest lectures, and academic gatherings.",
+    "mapId": "itm"
   },
   {
     "id": 32,
     "name": "SHD HALL ENTRY (2ND FLOOR)",
     "x": 1054,
     "y": 560,
-    "description": "Access point to the SHD Hall on the second floor, used for workshops, conferences, and student activities."
+    "description": "Access point to the SHD Hall on the second floor, used for workshops, conferences, and student activities.",
+    "mapId": "itm"
   },
   {
     "id": 33,
@@ -236,7 +268,8 @@
     "x": 750,
     "y": 943,
     "image": "/images/seating area.png",
-    "description": "Comfortable outdoor seating space for students to socialize, study, or simply unwind amidst the campus greenery."
+    "description": "Comfortable outdoor seating space for students to socialize, study, or simply unwind amidst the campus greenery.",
+    "mapId": "itm"
   },
   {
     "id": 34,
@@ -244,13 +277,39 @@
     "x": 350,
     "y": 1173,
     "image": "/images/girlshostelentry.png",
-    "description": "Secure entrance to the Girls' Hostel, ensuring privacy and safety for female residents with restricted access."
+    "description": "Secure entrance to the Girls' Hostel, ensuring privacy and safety for female residents with restricted access.",
+    "mapId": "itm"
   },
   {
     "id": 35,
     "name": "GUEST HOUSE & STAFF QUARTERS",
     "x": 271,
     "y": 1089,
-    "description": "Accommodation facility for visiting guests and residential quarters for faculty and staff, providing comfortable living spaces on campus."
+    "description": "Accommodation facility for visiting guests and residential quarters for faculty and staff, providing comfortable living spaces on campus.",
+    "mapId": "itm"
+  },
+  {
+    "id": 100,
+    "name": "CTM MAIN GATE",
+    "x": 500,
+    "y": 900,
+    "description": "Main entrance to the GL Bajaj CTM campus.",
+    "mapId": "ctm"
+  },
+  {
+    "id": 101,
+    "name": "CTM ACADEMIC BLOCK",
+    "x": 500,
+    "y": 500,
+    "description": "Main academic building for CTM students.",
+    "mapId": "ctm"
+  },
+  {
+    "id": 102,
+    "name": "CTM CANTEEN",
+    "x": 200,
+    "y": 200,
+    "description": "Canteen facility for CTM campus.",
+    "mapId": "ctm"
   }
 ]

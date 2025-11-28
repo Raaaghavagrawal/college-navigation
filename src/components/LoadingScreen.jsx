@@ -109,7 +109,7 @@ export function LoadingScreen({ isLoading, onComplete }) {
                             repeat: Infinity,
                             ease: 'easeInOut',
                         }}
-                        className="text-[60px] sm:text-[80px] md:text-[100px] lg:text-[120px] font-black mb-3 sm:mb-4 tracking-[0.2rem] sm:tracking-[0.3rem] md:tracking-[0.5rem] relative font-orbitron"
+                        className="text-[40px] xs:text-[50px] sm:text-[80px] md:text-[100px] lg:text-[120px] font-black mb-3 sm:mb-4 tracking-[0.1rem] xs:tracking-[0.15rem] sm:tracking-[0.3rem] md:tracking-[0.5rem] relative font-orbitron w-full max-w-full break-words"
                         style={{
                             background: 'linear-gradient(135deg, #38bdf8 0%, #0ea5e9 50%, #06b6d4 100%)',
                             WebkitBackgroundClip: 'text',
@@ -126,7 +126,7 @@ export function LoadingScreen({ isLoading, onComplete }) {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 1, delay: 0.3 }}
-                        className="text-sm sm:text-base md:text-lg text-sky-400/80 font-light mb-1 sm:mb-2 tracking-[0.15rem] sm:tracking-[0.2rem] md:tracking-[0.3rem] italic"
+                        className="text-xs xs:text-sm sm:text-base md:text-lg text-sky-400/80 font-light mb-1 sm:mb-2 tracking-[0.1rem] sm:tracking-[0.2rem] md:tracking-[0.3rem] italic"
                     >
                         Navigate Your Campus
                     </motion.div>
@@ -136,7 +136,7 @@ export function LoadingScreen({ isLoading, onComplete }) {
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 1, delay: 0.5 }}
-                        className="text-xl sm:text-2xl md:text-3xl text-slate-500 font-medium mb-8 sm:mb-10 md:mb-12 tracking-[0.15rem] sm:tracking-[0.2rem] md:tracking-[0.25rem]"
+                        className="text-lg xs:text-xl sm:text-2xl md:text-3xl text-slate-500 font-medium mb-8 sm:mb-10 md:mb-12 tracking-[0.1rem] sm:tracking-[0.2rem] md:tracking-[0.25rem]"
                     >
                         by GL Bajaj
                     </motion.div>

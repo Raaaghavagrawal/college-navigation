@@ -1612,5 +1612,55 @@
         "id": 62
       }
     }
+  },
+  {
+    "id": 63,
+    "source": 100,
+    "target": 101,
+    "length": 400.0,
+    "geom": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            500,
+            900
+          ],
+          [
+            500,
+            500
+          ]
+        ]
+      },
+      "properties": {
+        "id": 63
+      }
+    }
+  },
+  {
+    "id": 64,
+    "source": 101,
+    "target": 102,
+    "length": 424.26,
+    "geom": {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            500,
+            500
+          ],
+          [
+            200,
+            200
+          ]
+        ]
+      },
+      "properties": {
+        "id": 64
+      }
+    }
   }
 ]

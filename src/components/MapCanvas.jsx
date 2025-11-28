@@ -53,6 +53,9 @@ export const MapCanvas = forwardRef(function MapCanvas(
       return;
     }
 
+    // Auto-zoom to the new route
+    fitRouteToScreen(cleanPoints);
+
     animatorRef.current = new MarkerAnimator({
       points: cleanPoints,
       durationMs: 6000,
@@ -139,6 +142,53 @@ export const MapCanvas = forwardRef(function MapCanvas(
     const offsetY = (height - scaledHeight) / 2;
 
     setZoom(fitZoom);
+    setOffset({ x: offsetX, y: offsetY });
+  };
+
+  const fitRouteToScreen = (routePoints) => {
+    const container = containerRef.current;
+    if (!container || !routePoints || routePoints.length < 2) return;
+    const { width, height } = container.getBoundingClientRect();
+    if (width === 0 || height === 0) return;
+
+    // Calculate bounds in SVG coordinates
+    // Note: Input y is inverted relative to SVG y
+    let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+
+    routePoints.forEach(p => {
+      const svgY = VIEWBOX_HEIGHT - p.y;
+      if (p.x < minX) minX = p.x;
+      if (p.x > maxX) maxX = p.x;
+      if (svgY < minY) minY = svgY;
+      if (svgY > maxY) maxY = svgY;
+    });
+
+    const routeWidth = maxX - minX;
+    const routeHeight = maxY - minY;
+
+    // Add some padding to the bounds (e.g., 20% of the route size)
+    // Ensure we don't zoom in TOO much on very short routes
+    const w = Math.max(routeWidth, 100);
+    const h = Math.max(routeHeight, 100);
+
+    const scaleX = width / w;
+    const scaleY = height / h;
+
+    // Use a padding factor (e.g., 0.6 to leave plenty of space for UI panels)
+    const fitZoom = Math.min(scaleX, scaleY) * 0.6;
+
+    // Clamp zoom level to reasonable limits
+    const finalZoom = Math.min(Math.max(fitZoom, 0.5), 4.0);
+
+    const cx = minX + routeWidth / 2;
+    const cy = minY + routeHeight / 2;
+
+    // Calculate offset to center the route
+    // Center of container = (cx * zoom) + offset
+    const offsetX = (width / 2) - (cx * finalZoom);
+    const offsetY = (height / 2) - (cy * finalZoom);
+
+    setZoom(finalZoom);
     setOffset({ x: offsetX, y: offsetY });
   };
 
@@ -331,37 +381,40 @@ export const MapCanvas = forwardRef(function MapCanvas(
 
       {/* Map controls - Responsive positioning */}
       <div className="pointer-events-none absolute top-5 left-2 md:top-auto md:bottom-4 md:left-4 flex flex-col gap-1.5 md:gap-2 z-50">
-        <div className="pointer-events-auto inline-flex flex-col rounded-xl md:rounded-2xl bg-slate-900/80 border border-slate-800/80 shadow-lg shadow-black/60">
-          <IconButton label="Zoom in" onClick={() => zoomBy(0.2)} className="p-1.5 md:p-2">
+        <div className="pointer-events-auto inline-flex flex-col gap-2 md:gap-0 md:rounded-2xl md:bg-slate-900/80 md:border md:border-slate-800/80 md:shadow-lg md:shadow-black/60">
+          <IconButton label="Zoom in" onClick={() => zoomBy(0.2)} className="w-7 h-7 md:w-auto md:h-auto p-0 md:p-2 flex items-center justify-center shadow-lg md:shadow-none">
             <FiPlus className="text-xs md:text-sm" />
           </IconButton>
-          <IconButton label="Zoom out" onClick={() => zoomBy(-0.2)} className="p-1.5 md:p-2">
+          <IconButton label="Zoom out" onClick={() => zoomBy(-0.2)} className="w-7 h-7 md:w-auto md:h-auto p-0 md:p-2 flex items-center justify-center shadow-lg md:shadow-none">
             <FiMinus className="text-xs md:text-sm" />
           </IconButton>
-          <IconButton label="Recenter" onClick={recenter} className="p-1.5 md:p-2">
+          <IconButton label="Recenter" onClick={recenter} className="w-7 h-7 md:w-auto md:h-auto p-0 md:p-2 flex items-center justify-center shadow-lg md:shadow-none">
             <FiTarget className="text-xs md:text-sm" />
           </IconButton>
         </div>
 
-        <div className="pointer-events-auto mt-1 md:mt-2 inline-flex items-center gap-1 rounded-xl md:rounded-2xl bg-slate-900/80 border border-slate-800/80 px-1.5 md:px-2 py-0.5 md:py-1 text-[10px] md:text-[11px] text-slate-300">
-          <IconButton
-            label={isPlaying ? 'Pause route animation' : 'Play route animation'}
-            onClick={() => {
-              if (!animatorRef.current) return;
-              if (isPlaying) {
-                animatorRef.current.pause();
-                setIsPlaying(false);
-              } else {
-                animatorRef.current.play();
-                setIsPlaying(true);
-              }
-            }}
-            className="h-6 w-6 md:h-7 md:w-7"
-          >
-            {isPlaying ? <FiPause className="text-[10px] md:text-xs" /> : <FiPlay className="text-[10px] md:text-xs" />}
-          </IconButton>
-          <span className="pr-0.5 md:pr-1">Route</span>
-        </div>
+        {/* Route play/pause control - Only visible when route is active */}
+        {route && (
+          <div className="pointer-events-auto mt-1 md:mt-2 inline-flex items-center gap-1 rounded-xl md:rounded-2xl bg-slate-900/80 border border-slate-800/80 px-1.5 md:px-2 py-0.5 md:py-1 text-[10px] md:text-[11px] text-slate-300">
+            <IconButton
+              label={isPlaying ? 'Pause route animation' : 'Play route animation'}
+              onClick={() => {
+                if (!animatorRef.current) return;
+                if (isPlaying) {
+                  animatorRef.current.pause();
+                  setIsPlaying(false);
+                } else {
+                  animatorRef.current.play();
+                  setIsPlaying(true);
+                }
+              }}
+              className="h-6 w-6 md:h-7 md:w-7"
+            >
+              {isPlaying ? <FiPause className="text-[10px] md:text-xs" /> : <FiPlay className="text-[10px] md:text-xs" />}
+            </IconButton>
+            <span className="pr-0.5 md:pr-1">Route</span>
+          </div>
+        )}
       </div>
     </div>
   );
